@@ -85,41 +85,17 @@ for product in products:
                 if price_history[0].main_image_url:
                     st.image(price_history[0].main_image_url, width=200)
                 currency = price_history[0].currency
-                # Updated CSS with better width handling
-                st.markdown(
-                    """
-                    <style>
-                    [data-testid="stMetricValue"] {
-                        min-width: 200px;
-                    }
-                    [data-testid="stMetricValue"] > div {
-                        width: auto !important;
-                        white-space: nowrap;
-                        overflow: visible;
-                        margin-right: 20px;
-                        padding: 0 10px;
-                    }
-                    .element-container {
-                        width: 100% !important;
-                    }
-                    </style>
-                    """,
-                    unsafe_allow_html=True
-                )
-                # Add a container div for the metric
-                st.markdown('<div style="min-width: 200px;">', unsafe_allow_html=True)
                 # Format price using babel
                 formatted_price = format_currency(
                     price_history[0].price, 
                     currency,
-                    locale='en_US'  # This ensures standard international formatting
+                    locale='en_US'
                 )
                 
                 st.metric(
                     label="Current Price",
                     value=formatted_price
                 )
-                st.markdown('</div>', unsafe_allow_html=True)
 
             with col2:
                 # Format currency symbol for plot using babel
