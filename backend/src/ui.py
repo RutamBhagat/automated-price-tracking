@@ -26,9 +26,10 @@ with st.sidebar:
         elif not is_valid_url(product_url):
             st.error("Please enter a valid URL")
         else:
-            db.add_product(product_url)
-            with st.spinner("Added product to database. Scraping product data..."):
+            with st.spinner("Scraping product data..."):
                 product_data = scrape_product(product_url)
+                # Use the cleaned URL from product_data
+                db.add_product(product_data["url"])
                 db.add_price(product_data)
             st.success("Product is now being tracked!")
 
