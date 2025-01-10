@@ -7,6 +7,7 @@ load_dotenv()
 
 app = FirecrawlApp()
 
+
 class Product(BaseModel):
     """Schema for creating a new product"""
 
@@ -15,6 +16,7 @@ class Product(BaseModel):
     price: float = Field(description="The current price of the product")
     currency: str = Field(description="Currency code (USD, EUR, etc)")
     main_image_url: str = Field(description="The URL of the main image of the product")
+
 
 def scrape_product(url: str):
     extracted_data = app.scrape_url(
