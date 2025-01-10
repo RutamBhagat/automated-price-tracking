@@ -41,3 +41,20 @@ class Database:
             session.commit()
         finally:
             session.close()
+
+    def add_price(self, product_data):
+        session = self.Session()
+        try:
+            price_history = PriceHistory(
+                id=f"{product_data['url']}_{product_data['timestamp']}",
+                product_url=product_data["url"],
+                name=product_data["name"],
+                price=product_data["price"],
+                currency=product_data["currency"],
+                main_image_url=product_data["main_image_url"],
+                timestamp=product_data["timestamp"],
+            )
+            session.add(price_history)
+            session.commit()
+        finally:
+            session.close()
