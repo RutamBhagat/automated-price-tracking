@@ -8,6 +8,8 @@ attrs==24.3.0
     # via
     #   jsonschema
     #   referencing
+babel==2.16.0
+    # via automated-price-tracking (pyproject.toml)
 blinker==1.9.0
     # via streamlit
 cachetools==5.5.0

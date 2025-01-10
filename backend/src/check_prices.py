@@ -6,7 +6,7 @@ from scraper import scrape_product
 
 load_dotenv()
 
-db = Database(os.getenv("POSTGRES_URL"))
+db = Database(os.getenv("DATABASE_URL"))
 app = FirecrawlApp()
 
 def check_prices():
