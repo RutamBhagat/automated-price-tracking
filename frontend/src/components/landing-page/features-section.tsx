@@ -46,7 +46,6 @@ export default function FeaturesSection() {
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
               <Card className="relative overflow-hidden animate-fadeInUp rounded-xl bg-neutral-50 p-6 transition-shadow duration-300 hover:shadow-xl">
-                <BorderTrail size={80} className="absolute inset-0" />
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
                   <feature.icon className="h-8 w-8 text-blue-600" />
                 </div>

@@ -3,6 +3,7 @@ import { PlusCircle, BarChart2, Bell } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
 import { TextEffect } from "@/components/ui/text-effect";
+import { BorderTrail } from "@/components/ui/border-trail";
 
 export default function DemoSection() {
   return (
@@ -25,11 +26,15 @@ export default function DemoSection() {
           <InView
             variants={{
               hidden: { opacity: 0, scale: 0.95 },
-              visible: { opacity: 1, scale: 1 }
+              visible: { opacity: 1, scale: 1 },
             }}
             transition={{ duration: 0.5 }}
           >
-            <div className="animate-fadeInUp relative mb-12 rounded-xl bg-neutral-800 p-4 shadow-2xl">
+            <div className="animate-fadeInUp relative mb-12 overflow-hidden rounded-xl bg-neutral-800 p-4 shadow-2xl">
+              <BorderTrail
+                className="bg-gradient-to-l from-blue-200 via-blue-500 to-blue-200 dark:from-blue-400 dark:via-blue-500 dark:to-blue-700"
+                size={120}
+              />
               <div className="flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-neutral-700">
                 <div className="p-8 text-center">
                   <svg

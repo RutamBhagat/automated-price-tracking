@@ -52,7 +52,7 @@ export default function HowItWorksSection() {
               <Card className="relative w-full overflow-hidden md:w-[320px]">
                 <BorderTrail size={60} className="absolute inset-0" />
                 <div className="relative h-[280px] rounded-xl bg-neutral-50 p-8 transition-shadow hover:shadow-xl">
-                  <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-xl font-bold text-white">
+                  <div className="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-br-xl bg-blue-600 text-xl font-bold text-white">
                     {index + 1}
                   </div>
                   <div className="mb-6 text-center">
