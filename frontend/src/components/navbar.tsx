@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AnimatedBackground } from "@/components/ui/animated-background";
+import { Flame } from "lucide-react";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,11 +20,12 @@ export default function Navbar() {
     <nav className="fixed z-50 w-full bg-neutral-900/90 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
+            <Flame className="h-8 w-8 text-orange-600" />
             <span className="text-2xl font-bold text-white">PriceTracker</span>
           </div>
           <div className="hidden md:block">
-            <AnimatedBackground enableHover className="rounded-lg bg-blue-600/20">
+            <div className="rounded-lg">
               <div className="ml-10 flex items-baseline space-x-4">
                 {navItems.map((item) => (
                   <Link
@@ -36,14 +37,22 @@ export default function Navbar() {
                     {item.label}
                   </Link>
                 ))}
-                <Button
-                  variant="default"
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  Try it Now
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    className="w-24 border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    variant="default"
+                    className="w-24 bg-neutral-200 text-neutral-900 hover:bg-white"
+                  >
+                    Try it Now
+                  </Button>
+                </div>
               </div>
-            </AnimatedBackground>
+            </div>
           </div>
           <div className="md:hidden">
             <button
@@ -101,12 +110,20 @@ export default function Navbar() {
             >
               FAQ
             </Link>
-            <Button
-              variant="default"
-              className="mt-2 w-full bg-blue-600 hover:bg-blue-700"
-            >
-              Try it Now
-            </Button>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <Button
+                variant="outline"
+                className="w-full border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
+              >
+                Login
+              </Button>
+              <Button
+                variant="default"
+                className="w-full bg-neutral-200 text-neutral-900 hover:bg-white"
+              >
+                Try it Now
+              </Button>
+            </div>
           </div>
         </div>
       )}

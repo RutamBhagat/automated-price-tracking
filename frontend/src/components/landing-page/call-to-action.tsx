@@ -40,7 +40,7 @@ export default function CallToActionSection() {
               <div className="space-y-6">
                 <Button
                   size="lg"
-                  className="animate-pulse bg-white text-blue-600 hover:bg-blue-50"
+                  className="bg-white h-16 text-blue-600 hover:bg-blue-50"
                 >
                   Start Tracking Now – It&apos;s Free!
                 </Button>

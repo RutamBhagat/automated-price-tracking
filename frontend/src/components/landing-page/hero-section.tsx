@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { InView } from "@/components/ui/in-view";
 import { TextEffect } from "@/components/ui/text-effect";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
@@ -60,8 +61,16 @@ export default function HeroSection() {
             }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="relative transform rounded-xl bg-neutral-800/50 p-2 shadow-2xl backdrop-blur-sm transition-transform duration-300 hover:scale-105">
-              {/* existing demo preview */}
+            <div className="relative transform rounded-2xl bg-neutral-800 p-4 shadow-2xl transition-transform duration-300 hover:scale-105">
+              <Image
+                src="/price-drop.jpg"
+                alt="Price Drop Visualization"
+                className="rounded-xl"
+                width={600}
+                height={400}
+                priority
+                style={{ objectFit: 'cover' }}
+              />
             </div>
           </InView>
         </div>
