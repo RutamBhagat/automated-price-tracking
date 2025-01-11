@@ -96,6 +96,10 @@ for product in products:
                     label="Current Price",
                     value=formatted_price
                 )
+                
+                # Add availability status
+                if not price_history[0].is_available:
+                    st.warning("Currently Unavailable")
 
             with col2:
                 # Format currency symbol for plot using babel

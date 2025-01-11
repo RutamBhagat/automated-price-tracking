@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, Float, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, String, Float, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from datetime import datetime
 
@@ -24,6 +24,7 @@ class PriceHistory(Base):
     currency = Column(String, nullable=False)
     main_image_url = Column(String)
     timestamp = Column(DateTime, nullable=False)
+    is_available = Column(Boolean, nullable=False, default=True)
     product = relationship("Product", back_populates="prices")
 
 
@@ -54,6 +55,7 @@ class Database:
                 currency=product_data["currency"],
                 main_image_url=product_data["main_image_url"],
                 timestamp=product_data["timestamp"],
+                is_available=product_data["is_available"]
             )
             session.add(price_history)
             session.commit()
