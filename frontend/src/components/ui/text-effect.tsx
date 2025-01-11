@@ -164,11 +164,9 @@ const splitText = (text: string, per: 'line' | 'word' | 'char') => {
 };
 
 const hasTransition = (
-  variant: Variant
+  variant: Variant | undefined
 ): variant is TargetAndTransition & { transition?: Transition } => {
-  return (
-    typeof variant === 'object' && variant !== null && 'transition' in variant
-  );
+  return typeof variant === 'object' && variant !== null && 'transition' in variant;
 };
 
 const createVariantsWithTransition = (
@@ -177,25 +175,24 @@ const createVariantsWithTransition = (
 ): Variants => {
   if (!transition) return baseVariants;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { exit: _, ...mainTransition } = transition;
+  const visible = baseVariants.visible ?? {};
+  const exit = baseVariants.exit ?? {};
 
   return {
     ...baseVariants,
     visible: {
-      ...baseVariants.visible,
+      ...visible,
       transition: {
-        ...(hasTransition(baseVariants.visible)
-          ? baseVariants.visible.transition
-          : {}),
+        ...(hasTransition(visible) ? visible.transition : {}),
         ...mainTransition,
       },
     },
     exit: {
-      ...baseVariants.exit,
+      ...exit,
       transition: {
-        ...(hasTransition(baseVariants.exit)
-          ? baseVariants.exit.transition
-          : {}),
+        ...(hasTransition(exit) ? exit.transition : {}),
         ...mainTransition,
         staggerDirection: -1,
       },
@@ -244,7 +241,7 @@ export function TextEffect({
 
   const computedVariants = {
     container: createVariantsWithTransition(
-      variants?.container || baseVariants.container,
+      variants?.container ?? baseVariants.container,
       {
         staggerChildren: customStagger ?? stagger,
         delayChildren: customDelay ?? delay,
@@ -255,7 +252,7 @@ export function TextEffect({
         },
       }
     ),
-    item: createVariantsWithTransition(variants?.item || baseVariants.item, {
+    item: createVariantsWithTransition(variants?.item ?? baseVariants.item, {
       duration: baseDuration,
       ...segmentTransition,
     }),

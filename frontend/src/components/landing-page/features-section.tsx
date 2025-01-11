@@ -1,7 +1,6 @@
 import { Search, BarChart2, Mail } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { InView } from "@/components/ui/in-view";
-import { BorderTrail } from "@/components/ui/border-trail";
 
 const features = [
   {
