@@ -27,10 +27,19 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install uv
+          uv venv
+          source .venv/bin/activate
+          uv sync
+        # run: |
+        #   python -m pip install --upgrade pip
+        #   pip install -r requirements.txt
 
       - name: Run price checker
         env:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: python src/check_prices.py
+        run: |
+          source .venv/bin/activate
+          python src/check_prices.py
+        # run: python src/check_prices.py
