@@ -1,5 +1,4 @@
 import os
-import asyncio
 from database import Database
 from dotenv import load_dotenv
 from firecrawl import FirecrawlApp
@@ -15,13 +14,12 @@ app = FirecrawlApp()
 PRICE_DROP_THRESHOLD = 0.05
 
 
-async def check_prices():
+def check_prices():
     products = db.get_all_products()
-    product_urls = set(product.url for product in products)
 
-    for product_url in product_urls:
+    for product in products:
         # Get the price history
-        price_history = db.get_price_history(product_url)
+        price_history = db.get_price_history(product.url)
         if not price_history:
             continue
 
@@ -30,7 +28,7 @@ async def check_prices():
         currency = price_history[-1].currency
 
         # Retrieve updated product data
-        updated_product = scrape_product(product_url)
+        updated_product = scrape_product(product.url)
         current_price = updated_product["price"]
 
         # Add the price to the database
@@ -44,15 +42,15 @@ async def check_prices():
                 # Updated call to send_price_alert with all required parameters
                 # Hardcoded recipient email
                 RECIPIENT_EMAIL = "rutambhagat@gmail.com"
-                await send_price_alert(
+                send_price_alert(
                     product_name=updated_product["name"],
                     old_price=earliest_price,
                     new_price=current_price,
-                    url=product_url,
+                    url=product.url,
                     recipient_email=RECIPIENT_EMAIL,
                     currency=currency
                 )
 
 
 if __name__ == "__main__":
-    asyncio.run(check_prices())
+    check_prices()
