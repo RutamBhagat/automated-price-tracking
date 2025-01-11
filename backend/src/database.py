@@ -26,16 +26,38 @@ class PriceHistory(SQLModel, table=True):
 
 class Database:
     def __init__(self, connection_string: str):
+        """Initialize database connection.
+        
+        Args:
+            connection_string: Database connection URL
+        """
         self.engine = create_engine(connection_string)
         SQLModel.metadata.create_all(self.engine)
 
     def add_product(self, url: str):
+        """Add a new product to track.
+        
+        Args:
+            url: The URL of the product to track
+        """
         with Session(self.engine) as session:
             product = Product(url=url)
             session.merge(product)
             session.commit()
 
     def add_price(self, product_data: dict):
+        """Add a price history entry for a product.
+        
+        Args:
+            product_data: Dictionary containing product details including:
+                - url: Product URL
+                - timestamp: Time of price check
+                - name: Product name
+                - price: Current price
+                - currency: Price currency
+                - main_image_url: Product image URL
+                - is_available: Product availability status
+        """
         with Session(self.engine) as session:
             price_history = PriceHistory(
                 id=f"{product_data['url']}_{product_data['timestamp']}",
@@ -50,7 +72,32 @@ class Database:
             session.add(price_history)
             session.commit()
 
+    def remove_product(self, url: str) -> bool:
+        """Remove a product and all its price history entries.
+        
+        Args:
+            url: The URL of the product to remove
+            
+        Returns:
+            bool: True if product was found and removed, False otherwise
+        """
+        with Session(self.engine) as session:
+            product = session.get(Product, url)
+            if product:
+                session.delete(product)
+                session.commit()
+                return True
+            return False
+
     def get_price_history(self, url: str) -> List[PriceHistory]:
+        """Get price history for a product.
+        
+        Args:
+            url: The URL of the product
+            
+        Returns:
+            List[PriceHistory]: List of price history entries ordered by timestamp descending
+        """
         with Session(self.engine) as session:
             statement = (
                 select(PriceHistory)
@@ -60,6 +107,11 @@ class Database:
             return session.exec(statement).all()
 
     def get_all_products(self) -> List[Product]:
+        """Get all tracked products.
+        
+        Returns:
+            List[Product]: List of all products being tracked
+        """
         with Session(self.engine) as session:
             statement = select(Product)
             return session.exec(statement).all()
