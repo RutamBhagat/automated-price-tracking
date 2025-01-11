@@ -516,3 +516,4 @@ className	string		The class name to apply to the animated background for custom 
 transition	Transition		The transition effect from motion for animation effects.
 enableHover	boolean	false	Enables or disables the hover effect. When enableHover is true, spacing between children cannot be added.
 
+# Animated Number Component
