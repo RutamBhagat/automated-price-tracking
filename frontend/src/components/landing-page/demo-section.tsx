@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { PlusCircle, BarChart2, Bell } from "lucide-react";
+import { Card } from "../ui/card";
 
 export default function DemoSection() {
   return (
@@ -58,17 +59,17 @@ export default function DemoSection() {
                 description: "Instant price drop notifications",
               },
             ].map((feature, index) => (
-              <div
+              <Card
                 key={index}
-                className="animate-fadeInUp text-center text-white"
+                className="animate-fadeInUp h-full text-center text-white"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <div className="rounded-xl bg-neutral-800 p-6 transition-colors hover:bg-neutral-700">
+                <div className="h-full rounded-xl bg-neutral-800 p-6 transition-colors hover:bg-neutral-700">
                   <feature.icon className="mx-auto mb-4 h-12 w-12 text-blue-500" />
                   <h3 className="mb-2 font-semibold">{feature.title}</h3>
                   <p className="text-neutral-400">{feature.description}</p>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
 

@@ -63,7 +63,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 text-lg font-semibold">Contact</h4>
             <ul className="space-y-2">
-              <li className="text-neutral-400">support@pricetracker.com</li>
+              <li className="text-neutral-400">rutambhagat@gmail.com</li>
               <li className="text-neutral-400">Documentation</li>
               <li className="text-neutral-400">Privacy Policy</li>
               <li className="text-neutral-400">Terms of Service</li>
@@ -78,7 +78,7 @@ export default function Footer() {
               href="#"
               className="text-blue-400 transition-colors hover:text-blue-300"
             >
-              Your Name
+              Rutam Bhagat
             </a>
           </p>
         </div>

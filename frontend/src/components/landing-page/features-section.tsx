@@ -1,4 +1,5 @@
 import { Search, BarChart2, Mail, Layout, Zap } from "lucide-react";
+import { Card } from "../ui/card";
 
 const features = [
   {
@@ -44,7 +45,7 @@ export default function FeaturesSection() {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <div
+            <Card
               key={index}
               className="animate-fadeInUp rounded-xl bg-neutral-50 p-6 transition-shadow duration-300 hover:shadow-xl"
               style={{ animationDelay: `${index * 0.2}s` }}
@@ -58,7 +59,7 @@ export default function FeaturesSection() {
               <p className="text-center text-neutral-600">
                 {feature.description}
               </p>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

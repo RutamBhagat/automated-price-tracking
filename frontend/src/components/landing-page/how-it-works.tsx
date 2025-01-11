@@ -1,4 +1,5 @@
 import { Link, PlusCircle, Bell } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const steps = [
   {
@@ -31,12 +32,12 @@ export default function HowItWorksSection() {
 
         <div className="relative flex flex-col items-start justify-center gap-8 md:flex-row">
           {steps.map((step, index) => (
-            <div
+            <Card
               key={index}
-              className="animate-fadeInUp max-w-sm flex-1"
+              className="animate-fadeInUp w-full md:w-[320px]"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="relative rounded-xl bg-neutral-50 p-8 transition-shadow hover:shadow-xl">
+              <div className="relative h-[280px] rounded-xl bg-neutral-50 p-8 transition-shadow hover:shadow-xl">
                 <div className="absolute -left-4 -top-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-xl font-bold text-white">
                   {index + 1}
                 </div>
@@ -50,10 +51,8 @@ export default function HowItWorksSection() {
                   {step.description}
                 </p>
               </div>
-            </div>
+            </Card>
           ))}
-
-          <div className="absolute left-1/4 top-1/2 hidden h-0.5 w-1/2 bg-blue-200 lg:block"></div>
         </div>
       </div>
     </section>

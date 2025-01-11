@@ -25,27 +25,15 @@ export default function HeroSection() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
             <Button
               size="lg"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="z-10 h-16 bg-blue-600 text-lg text-white hover:bg-blue-700"
             >
               Try it Now – It&apos;s Free!
             </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="#Features" className="text-white hover:text-blue-600">
-                Learn How it Works
-                <svg
-                  className="ml-2 h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </Link>
+            <Button
+              size="lg"
+              className="z-10 h-16 bg-gray-600 text-lg text-white hover:bg-white hover:text-blue-600"
+            >
+              Try it Now – It&apos;s Free!
             </Button>
           </div>
         </div>

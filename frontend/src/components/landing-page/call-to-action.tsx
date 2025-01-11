@@ -6,20 +6,6 @@ export default function CallToActionSection() {
     <section id="CallToAction" className="bg-neutral-900 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-blue-800">
-          <div className="absolute inset-0 opacity-10">
-            <svg
-              className="h-full w-full"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 0L100 100M100 0L0 100"
-                stroke="white"
-                strokeWidth="0.5"
-              />
-            </svg>
-          </div>
-
           <div className="relative px-6 py-16 sm:px-12 lg:px-20">
             <div className="animate-fadeIn mx-auto max-w-3xl text-center">
               <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">
