@@ -4,55 +4,61 @@ import Image from "next/image";
 
 export default function page() {
   return (
-    <div className="w-full gap-10 min-h-screen lg:grid lg:grid-cols-2 lg:gap-0">
-      <div className="relative flex flex-col bg-[#18181B] p-8">
-        <div className="mb-auto">
+    <div className="w-full min-h-screen lg:grid lg:grid-cols-2">
+      <div className="relative flex flex-col bg-[#18181B] p-12">
+        <div className="mb-12">
           <Image
-            src="https://dummyimage.com/720x400"
-            alt="Logo"
-            width={48}
-            height={48}
+            src="/logo.png"  // Replace with your actual logo
+            alt="Price Track Logo"
+            width={120}
+            height={40}
             className="rounded-lg"
           />
         </div>
-        <div className="mx-auto flex w-full max-w-[400px] flex-col items-start justify-end space-y-8">
+        <div className="mx-auto flex w-full max-w-[450px] flex-col items-start justify-center flex-grow space-y-10">
           <div className="flex w-full flex-col items-start space-y-8">
-            <Image
-              src="/placeholder.svg?height=80&width=80"
-              alt="Profile"
-              width={80}
-              height={80}
-              className="rounded-full"
-            />
-            <blockquote className="text-xl font-medium leading-relaxed text-white">
-              &quot;Shadcn UI Kit for Figma has completely transformed our
-              design process. It&apos;s incredibly intuitive and saves us so
-              much time. The components are beautifully crafted and
-              customizable.&quot;
-            </blockquote>
-            <div className="space-y-1">
-              <div className="text-base font-medium text-white">
-                Sarah Thompson
-              </div>
-              <div className="text-sm text-zinc-400">
-                Lead UX Designer at BrightWave Solutions
+            <div className="flex items-center space-x-4">
+              <Image
+                src="/avatar-sarah.jpg"  // Replace with a real user photo or avatar
+                alt="User Avatar"
+                width={64}
+                height={64}
+                className="rounded-full ring-2 ring-zinc-700"
+              />
+              <div className="space-y-1">
+                <div className="text-base font-medium text-white">Sarah M.</div>
+                <div className="text-sm text-zinc-400">Verified Buyer</div>
               </div>
             </div>
+            <blockquote className="text-2xl font-medium leading-relaxed text-white">
+              &quot;This app makes saving money effortless! I never miss a deal on my favorite items anymore. Saved over $200 last month!&quot;
+            </blockquote>
+          </div>
+          <div className="pt-8 border-t border-zinc-800 w-full">
+            <p className="text-zinc-400">
+              Join over <span className="text-white font-semibold">10,000</span> smart shoppers already saving money
+            </p>
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center p-8">
-        <div className="mx-auto w-full max-w-[400px] space-y-6">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight">Sign in</h1>
-            <p className="text-zinc-500">
-              Log in to unlock tailored content and stay connected with your
-              community.
+      <div className="flex items-center justify-center p-8 bg-zinc-50">
+        <div className="mx-auto w-full max-w-[400px] space-y-8">
+          <div className="space-y-3 text-center">
+            <h1 className="text-3xl font-bold tracking-tight">Sign in to start saving!</h1>
+            <p className="text-zinc-600 text-lg">
+              Get notified about the best price drops for your favorite items
             </p>
           </div>
+          
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-zinc-200" />
+            </div>
+          </div>
+
           <Button
             variant="outline"
-            className="w-full justify-center gap-2 border-zinc-200 bg-white py-6 text-base shadow-none transition-colors hover:bg-zinc-50"
+            className="w-full justify-center gap-3 border-zinc-300 bg-white py-6 text-base font-medium shadow-sm hover:bg-zinc-50 transition-all duration-200"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
@@ -73,11 +79,20 @@ export default function page() {
               />
               <path d="M1 1h22v22H1z" fill="none" />
             </svg>
-            Sign in with Google
+            Continue with Google
           </Button>
-          <div className="text-sm text-zinc-500">
-            Join thousands of smart shoppers saving money effortlessly with
-            price tracking and notifications
+
+          <div className="text-center">
+            <p className="text-sm text-zinc-600">
+              By continuing, you agree to our{" "}
+              <a href="/terms" className="font-medium text-blue-600 hover:underline">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" className="font-medium text-blue-600 hover:underline">
+                Privacy Policy
+              </a>
+            </p>
           </div>
         </div>
       </div>
