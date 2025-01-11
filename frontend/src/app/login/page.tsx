@@ -8,7 +8,6 @@ import { TextShimmer } from "@/components/ui/text-shimmer";
 export default function Page() {
   return (
     <div className="flex relative min-h-screen w-full flex-col-reverse lg:grid lg:grid-cols-2">
-      {/* Logo - moved outside sections for consistent positioning */}
       <div className="fixed left-6 top-6 z-50 text-3xl sm:left-8 sm:top-8 sm:text-4xl lg:left-10 lg:top-10">
         🔥
       </div>

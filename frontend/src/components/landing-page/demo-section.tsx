@@ -1,45 +1,61 @@
 import { Button } from "@/components/ui/button";
 import { PlusCircle, BarChart2, Bell } from "lucide-react";
-import { Card } from "../ui/card";
+import { Card } from "@/components/ui/card";
+import { InView } from "@/components/ui/in-view";
+import { TextEffect } from "@/components/ui/text-effect";
 
 export default function DemoSection() {
   return (
     <section id="Demo" className="bg-neutral-900 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="animate-fadeIn mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-white">
-            See It in Action!
-          </h2>
-          <div className="mx-auto h-1 w-24 bg-blue-600"></div>
-        </div>
+        <InView>
+          <div className="mb-16 text-center">
+            <TextEffect
+              as="h2"
+              preset="blur"
+              className="mb-4 text-4xl font-bold text-white"
+            >
+              See It in Action!
+            </TextEffect>
+            <div className="mx-auto h-1 w-24 bg-blue-600"></div>
+          </div>
+        </InView>
 
         <div className="mx-auto max-w-4xl">
-          <div className="animate-fadeInUp relative mb-12 rounded-xl bg-neutral-800 p-4 shadow-2xl">
-            <div className="flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-neutral-700">
-              <div className="p-8 text-center">
-                <svg
-                  className="mx-auto mb-4 h-20 w-20 text-neutral-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <p className="text-lg text-neutral-400">Demo Video</p>
+          <InView
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1 }
+            }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="animate-fadeInUp relative mb-12 rounded-xl bg-neutral-800 p-4 shadow-2xl">
+              <div className="flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-neutral-700">
+                <div className="p-8 text-center">
+                  <svg
+                    className="mx-auto mb-4 h-20 w-20 text-neutral-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <p className="text-lg text-neutral-400">Demo Video</p>
+                </div>
               </div>
             </div>
-          </div>
+          </InView>
 
           <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {[

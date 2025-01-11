@@ -3,9 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { AnimatedBackground } from "@/components/ui/animated-background";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navItems = [
+    { href: "#Hero", label: "Home" },
+    { href: "#Features", label: "Features" },
+    { href: "#Demo", label: "Demo" },
+    { href: "#HowItWorks", label: "How It Works" },
+    { href: "#FAQ", label: "FAQ" },
+  ];
 
   return (
     <nav className="fixed z-50 w-full bg-neutral-900/90 backdrop-blur-sm">
@@ -15,44 +24,26 @@ export default function Navbar() {
             <span className="text-2xl font-bold text-white">PriceTracker</span>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <Link
-                href="#Hero"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                Home
-              </Link>
-              <Link
-                href="#Features"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                Features
-              </Link>
-              <Link
-                href="#Demo"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                Demo
-              </Link>
-              <Link
-                href="#HowItWorks"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                How It Works
-              </Link>
-              <Link
-                href="#FAQ"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >
-                FAQ
-              </Link>
-              <Button
-                variant="default"
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                Try it Now
-              </Button>
-            </div>
+            <AnimatedBackground enableHover className="rounded-lg bg-blue-600/20">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    data-id={item.href}
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <Button
+                  variant="default"
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  Try it Now
+                </Button>
+              </div>
+            </AnimatedBackground>
           </div>
           <div className="md:hidden">
             <button

@@ -1,5 +1,7 @@
-import { Search, BarChart2, Mail, Layout, Zap } from "lucide-react";
-import { Card } from "../ui/card";
+import { Search, BarChart2, Mail } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { InView } from "@/components/ui/in-view";
+import { BorderTrail } from "@/components/ui/border-trail";
 
 const features = [
   {
@@ -35,21 +37,27 @@ export default function FeaturesSection() {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <Card
+            <InView
               key={index}
-              className="animate-fadeInUp rounded-xl bg-neutral-50 p-6 transition-shadow duration-300 hover:shadow-xl"
-              style={{ animationDelay: `${index * 0.2}s` }}
+              variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                <feature.icon className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="mb-3 text-center text-xl font-semibold text-neutral-900">
-                {feature.title}
-              </h3>
-              <p className="text-center text-neutral-600">
-                {feature.description}
-              </p>
-            </Card>
+              <Card className="relative overflow-hidden animate-fadeInUp rounded-xl bg-neutral-50 p-6 transition-shadow duration-300 hover:shadow-xl">
+                <BorderTrail size={80} className="absolute inset-0" />
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                  <feature.icon className="h-8 w-8 text-blue-600" />
+                </div>
+                <h3 className="mb-3 text-center text-xl font-semibold text-neutral-900">
+                  {feature.title}
+                </h3>
+                <p className="text-center text-neutral-600">
+                  {feature.description}
+                </p>
+              </Card>
+            </InView>
           ))}
         </div>
       </div>

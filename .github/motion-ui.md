@@ -1,3 +1,51 @@
+# All components list in motion library
+Getting started
+Introduction
+Installation
+Core Components
+Accordion
+Animated Background
+Animated Group
+Animated Number
+Border Trail
+Carousel
+Cursor
+Dialog
+New
+Disclosure
+In View
+Infinite Slider
+Transition Panel
+Text
+Text Effect
+Updated
+Text Loop
+New
+Text Morph
+Updated
+Text Scramble
+Text Shimmer
+Text Shimmer Wave
+New
+Extras Components
+Dock
+Image Comparison
+Toolbar Dynamic
+Toolbar Expandable
+Popover
+Scroll Progress
+Spotlight
+New
+Spinning Text
+Tilt
+New
+Magnetic
+New
+Morphing Dialog
+
+(MOST IMPORTANT: IF YOU THINK ANY OF THESE ABOVE COMPONENTS MIGHT BE USEFUL FOR YOUR CURRENT TASK THEN ASK ME TO ADD THAT COMPONENTS DOCUMENTATION FOR YOU BEFORE USING THAT COMPONENT, CURRENTLY ONLY A FEW OF THESE COMPONENTS DOCUMENTATION HAS BEEN ADDED THAT CAN BE EXPANDED IF REQUESTED)
+
+
 # In View Component
 In View
 Easily animate elements when they come into view. You can apply animations to elements when they enter the viewport, or when they are fully visible.
@@ -373,4 +421,98 @@ duration	number	2	The duration of the shimmer effect.
 spread	number	2	The spread of the shimmer effect.
 Credits
 Inspired by JohnPhamous for the idea of the shimmer effect that scales with the content length.
+
+# Border Trail Component
+
+Border Trail
+Animated border effect that moves along the edges of its parent container.
+
+Examples
+Border Trail Card
+
+Preview
+Code
+Border Trail Loading Card
+
+Preview
+Code
+Border Trail Textarea
+
+Preview
+Code
+Installation
+
+CLI
+Manual
+npx shadcn add "https://motion-primitives.com/c/border-trail.json"
+Component API
+Border Trail
+Prop	Type	Default	Description
+className	string		Additional CSS classes for styling the border trail.
+size	number	60	Size of the animated border effect.
+transition	Transition		Custom transition settings for the animation.
+delay	number		Delay before the animation starts.
+onAnimationComplete	() => void		Callback function triggered when the animation completes.
+
+# Animated Background Component
+
+Animated Background
+Visually highlights selected items by sliding a background into view when hovered over or clicked. This smooth transition helps users focus on the active item, making it ideal for interactive lists, menus, or navigations where clear selection feedback is important.',
+
+Examples
+Animated Tabs
+
+Preview
+Code
+
+
+
+
+Animated Tabs Hover
+
+Preview
+Code
+
+Home
+
+About
+
+Services
+
+Contact
+Animated Card Background
+
+Preview
+Code
+
+
+
+
+
+
+Segmented Control
+
+Preview
+Code
+
+Day
+
+Week
+
+Month
+
+Year
+Installation
+
+CLI
+Manual
+npx shadcn add "https://motion-primitives.com/c/animated-background.json"
+Component API
+Prop	Type	Default	Description
+children	ReactElement with 'data-id' string attribute array or single element		The content to be displayed within the animated background. Each child must have a unique data-id attribute to ensure correct functionality.
+defaultValue	string		The default value to be used as the active item identifier.
+onValueChange	(newActiveId: string | null) => void		Callback function that is called when the active item changes.
+className	string		The class name to apply to the animated background for custom styling.
+transition	Transition		The transition effect from motion for animation effects.
+enableHover	boolean	false	Enables or disables the hover effect. When enableHover is true, spacing between children cannot be added.
 
