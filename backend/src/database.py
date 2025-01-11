@@ -10,7 +10,6 @@ if TYPE_CHECKING:
 
 
 class Product(SQLModel, table=True):
-    __tablename__ = "products"  # Specify existing table name
     url: str = Field(primary_key=True)
     prices: List["PriceHistory"] = Relationship(
         back_populates="product",
@@ -19,7 +18,6 @@ class Product(SQLModel, table=True):
 
 
 class PriceHistory(SQLModel, table=True):
-    __tablename__ = "price_histories"  # Specify existing table name
     id: str = Field(primary_key=True)
     product_url: str = Field(foreign_key="products.url")
     name: str
