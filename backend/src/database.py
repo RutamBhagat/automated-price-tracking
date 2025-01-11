@@ -1,52 +1,35 @@
-from sqlalchemy import create_engine, Column, String, Float, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from datetime import datetime
+from typing import Optional, List
+from sqlmodel import SQLModel, Field, create_engine, Session, select, Relationship
 
-Base = declarative_base()
+class Product(SQLModel, table=True):
+    url: str = Field(primary_key=True)
+    prices: List["PriceHistory"] = Relationship(back_populates="product")
 
-
-class Product(Base):
-    __tablename__ = "products"
-
-    url = Column(String, primary_key=True)
-    prices = relationship(
-        "PriceHistory", back_populates="product", cascade="all, delete-orphan"
-    )
-
-
-class PriceHistory(Base):
-    __tablename__ = "price_histories"
-
-    id = Column(String, primary_key=True)
-    product_url = Column(String, ForeignKey("products.url"))
-    name = Column(String, nullable=False)
-    price = Column(Float, nullable=False)
-    currency = Column(String, nullable=False)
-    main_image_url = Column(String)
-    timestamp = Column(DateTime, nullable=False)
-    is_available = Column(Boolean, nullable=False, default=True)
-    product = relationship("Product", back_populates="prices")
-
+class PriceHistory(SQLModel, table=True):
+    id: str = Field(primary_key=True)
+    product_url: str = Field(foreign_key="products.url")
+    name: str
+    price: float
+    currency: str
+    main_image_url: Optional[str] = None
+    timestamp: datetime
+    is_available: bool = Field(default=True)
+    product: Product = Relationship(back_populates="prices")
 
 class Database:
-    def __init__(self, connection_string):
+    def __init__(self, connection_string: str):
         self.engine = create_engine(connection_string)
-        Base.metadata.create_all(self.engine)
-        self.Session = sessionmaker(bind=self.engine)
+        SQLModel.metadata.create_all(self.engine)
 
-    def add_product(self, url):
-        session = self.Session()
-        try:
-            # Create the product entry
+    def add_product(self, url: str):
+        with Session(self.engine) as session:
             product = Product(url=url)
-            session.merge(product)  # merge will update if exists, insert if not
+            session.merge(product)
             session.commit()
-        finally:
-            session.close()
 
-    def add_price(self, product_data):
-        session = self.Session()
-        try:
+    def add_price(self, product_data: dict):
+        with Session(self.engine) as session:
             price_history = PriceHistory(
                 id=f"{product_data['url']}_{product_data['timestamp']}",
                 product_url=product_data["url"],
@@ -59,25 +42,17 @@ class Database:
             )
             session.add(price_history)
             session.commit()
-        finally:
-            session.close()
 
-    def get_price_history(self, url):
-        """Get price history for a product"""
-        session = self.Session()
-        try:
-            return (
-                session.query(PriceHistory)
-                .filter(PriceHistory.product_url == url)
+    def get_price_history(self, url: str) -> List[PriceHistory]:
+        with Session(self.engine) as session:
+            statement = (
+                select(PriceHistory)
+                .where(PriceHistory.product_url == url)
                 .order_by(PriceHistory.timestamp.desc())
-                .all()
             )
-        finally:
-            session.close()
+            return session.exec(statement).all()
 
-    def get_all_products(self):
-        session = self.Session()
-        try:
-            return session.query(Product).all()
-        finally:
-            session.close()
+    def get_all_products(self) -> List[Product]:
+        with Session(self.engine) as session:
+            statement = select(Product)
+            return session.exec(statement).all()

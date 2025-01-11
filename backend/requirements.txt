@@ -76,6 +76,7 @@ pydantic==2.10.5
     # via
     #   automated-price-tracking (pyproject.toml)
     #   firecrawl-py
+    #   sqlmodel
 pydantic-core==2.27.2
     # via pydantic
 pydeck==0.9.1
@@ -109,6 +110,8 @@ six==1.17.0
 smmap==5.0.2
     # via gitdb
 sqlalchemy==2.0.35
+    # via sqlmodel
+sqlmodel==0.0.22
     # via automated-price-tracking (pyproject.toml)
 streamlit==1.41.1
     # via automated-price-tracking (pyproject.toml)
