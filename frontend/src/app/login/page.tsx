@@ -1,55 +1,83 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { TextEffect } from "@/components/ui/text-effect";
+import { InView } from "@/components/ui/in-view";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 
-export default function page() {
+export default function Page() {
   return (
-    <div className="w-full min-h-screen lg:grid lg:grid-cols-2">
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
       <div className="relative flex flex-col bg-[#18181B] p-12">
         <div className="mb-12">
           <Image
-            src="/logo.png"  // Replace with your actual logo
+            src="/logo.png" // Replace with your actual logo
             alt="Price Track Logo"
             width={120}
             height={40}
             className="rounded-lg"
           />
         </div>
-        <div className="mx-auto flex w-full max-w-[450px] flex-col items-start justify-center flex-grow space-y-10">
+        <div className="mx-auto flex w-full max-w-[450px] flex-grow flex-col items-start justify-center space-y-10">
           <div className="flex w-full flex-col items-start space-y-8">
-            <div className="flex items-center space-x-4">
-              <Image
-                src="/avatar-sarah.jpg"  // Replace with a real user photo or avatar
-                alt="User Avatar"
-                width={64}
-                height={64}
-                className="rounded-full ring-2 ring-zinc-700"
-              />
-              <div className="space-y-1">
-                <div className="text-base font-medium text-white">Sarah M.</div>
-                <div className="text-sm text-zinc-400">Verified Buyer</div>
+            <InView
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0 },
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center space-x-4">
+                <Image
+                  src="/avatar-sarah.jpg" // Replace with a real user photo or avatar
+                  alt="User Avatar"
+                  width={64}
+                  height={64}
+                  className="rounded-full ring-2 ring-zinc-700"
+                />
+                <div className="space-y-1">
+                  <div className="text-base font-medium text-white">
+                    Sarah M.
+                  </div>
+                  <div className="text-sm text-zinc-400">Verified Buyer</div>
+                </div>
               </div>
-            </div>
-            <blockquote className="text-2xl font-medium leading-relaxed text-white">
-              &quot;This app makes saving money effortless! I never miss a deal on my favorite items anymore. Saved over $200 last month!&quot;
-            </blockquote>
+              <blockquote className="text-2xl font-medium leading-relaxed text-white">
+                <TextEffect preset="fade-in-blur" per="word" as="span">
+                  This app makes saving money effortless! I never miss a deal on
+                  my favorite items anymore. Saved over $200 last month!
+                </TextEffect>
+              </blockquote>
+            </InView>
           </div>
-          <div className="pt-8 border-t border-zinc-800 w-full">
-            <p className="text-zinc-400">
-              Join over <span className="text-white font-semibold">10,000</span> smart shoppers already saving money
-            </p>
+          <div className="w-full border-t border-zinc-800 pt-8">
+            <TextShimmer
+              duration={3}
+              spread={3}
+              as="div"
+              className="text-zinc-400"
+            >
+              Join over 10,000 smart shoppers already saving money
+            </TextShimmer>
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center p-8 bg-zinc-50">
+      <div className="flex items-center justify-center bg-zinc-50 p-8">
         <div className="mx-auto w-full max-w-[400px] space-y-8">
           <div className="space-y-3 text-center">
-            <h1 className="text-3xl font-bold tracking-tight">Sign in to start saving!</h1>
-            <p className="text-zinc-600 text-lg">
+            <TextEffect
+              preset="fade"
+              per="word"
+              as="h1"
+              className="text-3xl font-bold tracking-tight"
+            >
+              Sign in to start saving!
+            </TextEffect>
+            <p className="text-lg text-zinc-600">
               Get notified about the best price drops for your favorite items
             </p>
           </div>
-          
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-zinc-200" />
@@ -58,7 +86,7 @@ export default function page() {
 
           <Button
             variant="outline"
-            className="w-full justify-center gap-3 border-zinc-300 bg-white py-6 text-base font-medium shadow-sm hover:bg-zinc-50 transition-all duration-200"
+            className="w-full justify-center gap-3 border-zinc-300 bg-white py-6 text-base font-medium shadow-sm transition-all duration-200 hover:bg-zinc-50"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
@@ -85,11 +113,17 @@ export default function page() {
           <div className="text-center">
             <p className="text-sm text-zinc-600">
               By continuing, you agree to our{" "}
-              <a href="/terms" className="font-medium text-blue-600 hover:underline">
+              <a
+                href="/terms"
+                className="font-medium text-blue-600 hover:underline"
+              >
                 Terms of Service
               </a>{" "}
               and{" "}
-              <a href="/privacy" className="font-medium text-blue-600 hover:underline">
+              <a
+                href="/privacy"
+                className="font-medium text-blue-600 hover:underline"
+              >
                 Privacy Policy
               </a>
             </p>
