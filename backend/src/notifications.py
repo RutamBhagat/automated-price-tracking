@@ -7,7 +7,7 @@ from babel.numbers import format_currency
 
 load_dotenv()
 
-def send_price_alert(product_name: str, old_price: float, new_price: float, url: str, recipient_email: str, currency: str = 'INR'):
+def send_price_alert(product_name: str, old_price: float, new_price: float, url: str, recipient_email: str, currency: str = 'INR', main_image_url: str = None):
     """Send a beautifully styled price drop alert via email
     
     Args:
@@ -17,6 +17,7 @@ def send_price_alert(product_name: str, old_price: float, new_price: float, url:
         url (str): Product URL
         recipient_email (str): Email address to send the alert to
         currency (str): Currency code (default: 'INR')
+        main_image_url (str): URL of the product image
     """
     sender_email = os.getenv("EMAIL_ADDRESS")
     sender_password = os.getenv("EMAIL_APP_PASSWORD")
@@ -42,29 +43,42 @@ def send_price_alert(product_name: str, old_price: float, new_price: float, url:
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Price Drop Alert</title>
     </head>
-    <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
-        <table width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);">
+    <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f4f8;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);">
             <tr>
-                <td style="background-color: #1e3a8a; padding: 30px 15px; text-align: center; border-top-left-radius: 12px; border-top-right-radius: 12px;">
-                    <h1 style="margin: 0; color: #ffffff; font-size: 28px;">🔥 Price Drop Alert! 🔥</h1>
+                <td style="background-color: #1e3a8a; padding: 30px 15px; text-align: center;">
+                    <h1 style="margin: 0; color: #ffffff; font-size: 28px; letter-spacing: 1px;">🔥 Price Drop Alert! 🔥</h1>
                 </td>
             </tr>
             <tr>
                 <td style="padding: 30px 20px;">
                     <h2 style="font-size: 24px; color: #1a202c; margin-bottom: 20px; text-align: center;">{product_name}</h2>
-                    <div style="background-color: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; text-align: center;">
-                        <span style="background-color: #fef2f2; color: #dc2626; font-size: 24px; font-weight: 700; padding: 8px 16px; border-radius: 8px; display: inline-block;">-{drop_percentage:.1f}% Off!</span>
-                        <span style="display: block; color: #64748b; text-decoration: line-through; font-size: 18px; margin: 16px 0 8px;">{formatted_old_price}</span>
-                        <span style="display: block; color: #0f172a; font-size: 32px; font-weight: 800;">{formatted_new_price}</span>
-                        <a href="{url}" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; margin-top: 20px;">View Deal</a>
-                    </div>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f7fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px;">
+                        <tr>
+                            <td>
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td width="200" valign="top" style="padding-right: 24px;">
+                                            {'<img src="' + main_image_url + '" style="width: 100%; height: auto; border-radius: 8px; display: block;">' if main_image_url else ''}
+                                        </td>
+                                        <td valign="top" style="text-align: center;">
+                                            <span style="background-color: #fef2f2; color: #dc2626; font-size: 24px; font-weight: 700; padding: 8px 16px; border-radius: 8px; display: inline-block;">-{drop_percentage:.1f}% Off!</span>
+                                            <span style="display: block; color: #64748b; text-decoration: line-through; font-size: 18px; margin: 16px 0 8px;">{formatted_old_price}</span>
+                                            <span style="display: block; color: #0f172a; font-size: 32px; font-weight: 800;">{formatted_new_price}</span>
+                                            <a href="{url}" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; margin-top: 20px; transition: background-color 0.3s ease;">View Deal</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <tr>
                 <td style="padding: 20px; background-color: #f8fafc; text-align: center; font-size: 14px; color: #718096;">
                     <p style="margin: 0 0 10px;">This is an automated price alert. Prices and availability are subject to change.</p>
                     <p style="margin: 0;">
-                        <a href="#" style="color: #2563eb; text-decoration: none;">Unsubscribe</a> | 
+                        <a href="#" style="color: #2563eb; text-decoration: none; margin-right: 10px;">Unsubscribe</a>
                         <a href="#" style="color: #2563eb; text-decoration: none;">Manage Preferences</a>
                     </p>
                 </td>
@@ -91,10 +105,11 @@ def send_price_alert(product_name: str, old_price: float, new_price: float, url:
 if __name__ == "__main__":
     # Test the email notification
     send_price_alert(
-        "Apple 2024 MacBook Air 13″ Laptop with M3 chip", 
-        154900, 
-        134900, 
-        "https://www.amazon.in/dp/B0CX237H3B",
+        "iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip and a Big Boost in Battery Life. Works with AirPods; Black", 
+        94900, 
+        74900, 
+        "https://www.amazon.in/dp/B0DGJHBX5Y",
         "rutambhagat@gmail.com",
-        "INR"
+        "INR",
+        "https://m.media-amazon.com/images/I/314AuUzHa2L._SX300_SY300_QL70_FMwebp_.jpg"
     )

@@ -52,7 +52,8 @@ def check_prices():
                     new_price=current_price,
                     url=product.url,
                     recipient_email=RECIPIENT_EMAIL,
-                    currency=currency
+                    currency=currency,
+                    main_image_url=updated_product["main_image_url"]
                 )
 
 
