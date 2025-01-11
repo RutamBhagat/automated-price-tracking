@@ -19,17 +19,7 @@ const features = [
     title: "Email Notifications",
     description:
       "Get notified when prices drop below your threshold instantly.",
-  },
-  {
-    icon: Layout,
-    title: "Easy-to-Use Interface",
-    description: "Manage tracked products effortlessly with our sleek design.",
-  },
-  {
-    icon: Zap,
-    title: "Automated Price Checking",
-    description: "Run hourly, daily, or weekly checks automatically.",
-  },
+  }
 ];
 
 export default function FeaturesSection() {
