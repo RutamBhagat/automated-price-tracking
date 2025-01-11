@@ -1,12 +1,19 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
+
 from sqlmodel import SQLModel, Field, create_engine, Session, select, Relationship
 
+if TYPE_CHECKING:
+    from typing import ForwardRef
+    PriceHistory = ForwardRef("PriceHistory")
+
 class Product(SQLModel, table=True):
+    __tablename__ = "products"  # Specify existing table name
     url: str = Field(primary_key=True)
-    prices: List["PriceHistory"] = Relationship(back_populates="product")
+    prices: List["PriceHistory"] = Relationship(back_populates="product", sa_relationship_kwargs={"cascade": "all, delete-orphan"})
 
 class PriceHistory(SQLModel, table=True):
+    __tablename__ = "price_histories"  # Specify existing table name
     id: str = Field(primary_key=True)
     product_url: str = Field(foreign_key="products.url")
     name: str
@@ -15,7 +22,7 @@ class PriceHistory(SQLModel, table=True):
     main_image_url: Optional[str] = None
     timestamp: datetime
     is_available: bool = Field(default=True)
-    product: Product = Relationship(back_populates="prices")
+    product: Optional[Product] = Relationship(back_populates="prices")
 
 class Database:
     def __init__(self, connection_string: str):
