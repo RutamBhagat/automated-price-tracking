@@ -47,7 +47,7 @@ export default function HeroSection() {
               size="lg"
               className="z-10 h-16 bg-gray-600 text-lg text-white hover:bg-white hover:text-blue-600"
             >
-              Try it Now – It&apos;s Free!
+              Learn How it Works
             </Button>
           </div>
         </InView>
