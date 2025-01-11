@@ -30,7 +30,7 @@ def check_prices():
 
         # Retrieve updated product data
         updated_product = scrape_product(product.url)
-        
+
         # If product is unavailable, keep the last known price
         if not updated_product["is_available"]:
             updated_product["price"] = price_history[0].price  # Use most recent price
@@ -53,7 +53,7 @@ def check_prices():
                     url=product.url,
                     recipient_email=RECIPIENT_EMAIL,
                     currency=currency,
-                    main_image_url=updated_product["main_image_url"]
+                    main_image_url=updated_product["main_image_url"],
                 )
 
 

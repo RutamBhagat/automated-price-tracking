@@ -14,7 +14,8 @@ load_dotenv()
 
 st.set_page_config(layout="wide")
 
-st.markdown("""
+st.markdown(
+    """
     <style>
         .block-container {
             max-width: 75% !important;
@@ -33,7 +34,9 @@ st.markdown("""
             margin-right: 20px;
         }
     </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 # Loading database
 with st.spinner("Loading database..."):
@@ -77,7 +80,8 @@ for product in products:
         )
 
         with st.expander(df["name"][0], expanded=True):
-            st.markdown("""
+            st.markdown(
+                """
                 <style>
                     [data-testid="column"] {
                         display: flex !important;
@@ -94,8 +98,10 @@ for product in products:
                         height: 100% !important;
                     }
                 </style>
-            """, unsafe_allow_html=True)
-            
+            """,
+                unsafe_allow_html=True,
+            )
+
             col1, col2 = st.columns([1, 3])
 
             with col1:
@@ -103,20 +109,16 @@ for product in products:
                     st.image(price_history[0].main_image_url, width=200)
                 currency = price_history[0].currency
                 formatted_price = format_currency(
-                    price_history[0].price, 
-                    currency,
-                    locale='en_US'
+                    price_history[0].price, currency, locale="en_US"
                 )
-                
-                st.metric(
-                    label="Current Price",
-                    value=formatted_price
-                )
-                
+
+                st.metric(label="Current Price", value=formatted_price)
+
                 if not price_history[0].is_available:
                     st.warning("Currently Unavailable")
-                
-                st.markdown("""
+
+                st.markdown(
+                    """
                     <style>
                         .stButton > button {
                             width: 100% !important;
@@ -128,21 +130,32 @@ for product in products:
                             justify-content: center !important;
                         }
                     </style>
-                """, unsafe_allow_html=True)
-                
-                visit_btn = st.button("🔗 Visit Product", key=f"visit_{product.url}", 
-                                    help="Visit product page", use_container_width=True)
+                """,
+                    unsafe_allow_html=True,
+                )
+
+                visit_btn = st.button(
+                    "🔗 Visit Product",
+                    key=f"visit_{product.url}",
+                    help="Visit product page",
+                    use_container_width=True,
+                )
                 if visit_btn:
                     webbrowser.open(product.url)
-                
-                remove_btn = st.button("🗑️ Remove Tracking", key=f"remove_{product.url}", 
-                                     help="Remove product from tracking", use_container_width=True)
+
+                remove_btn = st.button(
+                    "🗑️ Remove Tracking",
+                    key=f"remove_{product.url}",
+                    help="Remove product from tracking",
+                    use_container_width=True,
+                )
                 if remove_btn:
                     if db.remove_product(product.url):
                         st.rerun()
 
             with col2:
-                st.markdown("""
+                st.markdown(
+                    """
                     <style>
                         [data-testid="stPlotlyChart"] {
                             width: 100% !important;
@@ -151,12 +164,16 @@ for product in products:
                             align-items: center !important;
                         }
                     </style>
-                """, unsafe_allow_html=True)
-                
+                """,
+                    unsafe_allow_html=True,
+                )
+
                 # Format currency symbol for plot using babel
-                sample_format = format_currency(0, price_history[0].currency, locale='en_US')
+                sample_format = format_currency(
+                    0, price_history[0].currency, locale="en_US"
+                )
                 currency_symbol = sample_format[0]
-                
+
                 fig = px.line(
                     df,
                     x="timestamp",

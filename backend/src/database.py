@@ -5,12 +5,18 @@ from sqlmodel import SQLModel, Field, create_engine, Session, select, Relationsh
 
 if TYPE_CHECKING:
     from typing import ForwardRef
+
     PriceHistory = ForwardRef("PriceHistory")
+
 
 class Product(SQLModel, table=True):
     __tablename__ = "products"  # Specify existing table name
     url: str = Field(primary_key=True)
-    prices: List["PriceHistory"] = Relationship(back_populates="product", sa_relationship_kwargs={"cascade": "all, delete-orphan"})
+    prices: List["PriceHistory"] = Relationship(
+        back_populates="product",
+        sa_relationship_kwargs={"cascade": "all, delete-orphan"},
+    )
+
 
 class PriceHistory(SQLModel, table=True):
     __tablename__ = "price_histories"  # Specify existing table name
@@ -24,10 +30,11 @@ class PriceHistory(SQLModel, table=True):
     is_available: bool = Field(default=True)
     product: Optional[Product] = Relationship(back_populates="prices")
 
+
 class Database:
     def __init__(self, connection_string: str):
         """Initialize database connection.
-        
+
         Args:
             connection_string: Database connection URL
         """
@@ -36,7 +43,7 @@ class Database:
 
     def add_product(self, url: str):
         """Add a new product to track.
-        
+
         Args:
             url: The URL of the product to track
         """
@@ -47,7 +54,7 @@ class Database:
 
     def add_price(self, product_data: dict):
         """Add a price history entry for a product.
-        
+
         Args:
             product_data: Dictionary containing product details including:
                 - url: Product URL
@@ -67,17 +74,17 @@ class Database:
                 currency=product_data["currency"],
                 main_image_url=product_data["main_image_url"],
                 timestamp=product_data["timestamp"],
-                is_available=product_data["is_available"]
+                is_available=product_data["is_available"],
             )
             session.add(price_history)
             session.commit()
 
     def remove_product(self, url: str) -> bool:
         """Remove a product and all its price history entries.
-        
+
         Args:
             url: The URL of the product to remove
-            
+
         Returns:
             bool: True if product was found and removed, False otherwise
         """
@@ -91,10 +98,10 @@ class Database:
 
     def get_price_history(self, url: str) -> List[PriceHistory]:
         """Get price history for a product.
-        
+
         Args:
             url: The URL of the product
-            
+
         Returns:
             List[PriceHistory]: List of price history entries ordered by timestamp descending
         """
@@ -108,7 +115,7 @@ class Database:
 
     def get_all_products(self) -> List[Product]:
         """Get all tracked products.
-        
+
         Returns:
             List[Product]: List of all products being tracked
         """
