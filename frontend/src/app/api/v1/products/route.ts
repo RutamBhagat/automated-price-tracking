@@ -16,7 +16,13 @@ export async function GET() {
       );
     }
 
-    const products = await ProductService.getAllProducts(session.user.id);
+    const userProducts = await ProductService.getAllProducts(session.user.id);
+    // Transform the response to match the expected format
+    const products = userProducts.map(up => ({
+      ...up.product,
+      latestPrice: up.product.prices[0] ?? null,
+    }));
+
     return Response.json(products, { status: StatusCodes.OK });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -40,17 +46,27 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 
+    // First scrape the product
     const productData = await ProductScraper.scrapeProduct(url);
-    await ProductService.addProduct(url, session.user.id);
-    await ProductService.addPrice(productData);
+    
+    // Then create/update the product and user association
+    const userProduct = await ProductService.addProduct(
+      productData.url,
+      session.user.id,
+    );
+    
+    // Finally add the price history
+    const priceHistory = await ProductService.addPrice(productData);
 
+    // Return the combined data
     return Response.json({
-      url: productData.url,
-      latest_price: productData.price,
-      latest_name: productData.name,
-      currency: productData.currency,
-      is_available: productData.is_available,
-      main_image_url: productData.main_image_url,
+      url: userProduct.productUrl,
+      latest_price: priceHistory.price,
+      latest_name: priceHistory.name,
+      currency: priceHistory.currency,
+      is_available: priceHistory.is_available,
+      main_image_url: priceHistory.main_image_url,
+      tracked_since: userProduct.createdAt,
     }, { status: StatusCodes.CREATED });
 
   } catch (error) {
