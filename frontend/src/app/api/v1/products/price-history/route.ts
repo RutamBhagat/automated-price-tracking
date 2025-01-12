@@ -20,28 +20,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Parse URL from body
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
-
-    // Parse query parameters
     const searchParams = Object.fromEntries(request.nextUrl.searchParams);
     const { limit, offset } = QuerySchema.parse(searchParams);
 
-    const priceHistory = await ProductService.getPriceHistory(url);
-    if (!priceHistory || priceHistory.length === 0) {
-      return Response.json(
-        { message: "Product not found" },
-        { status: StatusCodes.NOT_FOUND }
-      );
+    try {
+      const priceHistory = await ProductService.getPriceHistory(url);
+      
+      // Apply pagination if limit is specified
+      const paginatedHistory = limit 
+        ? priceHistory.slice(offset, offset + limit)
+        : priceHistory;
+
+      return Response.json({
+        total: priceHistory.length,
+        items: paginatedHistory,
+      }, { status: StatusCodes.OK });
+
+    } catch (error) {
+      if (error instanceof Error && error.message === "Product not found") {
+        return Response.json(
+          { message: "Product not found" },
+          { status: StatusCodes.NOT_FOUND }
+        );
+      }
+      throw error;
     }
-
-    // Apply pagination if limit is specified
-    const paginatedHistory = limit 
-      ? priceHistory.slice(offset, offset + limit)
-      : priceHistory;
-
-    return Response.json(paginatedHistory, { status: StatusCodes.OK });
 
   } catch (error) {
     console.error("Error getting price history:", error);
