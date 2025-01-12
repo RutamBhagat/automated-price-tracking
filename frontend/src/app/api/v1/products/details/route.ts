@@ -18,36 +18,47 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 
-    const priceHistory = await ProductService.getPriceHistory(url);
-    
-    if (!priceHistory || priceHistory.length === 0) {
-      return Response.json(
-        { message: "Product not found" },
-        { status: StatusCodes.NOT_FOUND }
-      );
+    try {
+      const priceHistory = await ProductService.getPriceHistory(url);
+      
+      if (!priceHistory || priceHistory.length === 0) {
+        return Response.json(
+          { message: "No price history found for this product" },
+          { status: StatusCodes.NOT_FOUND }
+        );
+      }
+
+      const latest = priceHistory[0] ?? null;
+      if (!latest) {
+        return Response.json(
+          { message: "No price history available" },
+          { status: StatusCodes.NOT_FOUND }
+        );
+      }
+
+      const product: ProductResponse = {
+        url: url,
+        latest_price: latest.price,
+        latest_name: latest.name,
+        currency: latest.currency,
+        is_available: latest.is_available,
+        main_image_url: latest.main_image_url,
+      };
+
+      return Response.json({
+        product,
+        price_history: priceHistory,
+      }, { status: StatusCodes.OK });
+
+    } catch (error) {
+      if (error instanceof Error && error.message === "Product not found") {
+        return Response.json(
+          { message: "Product not found" },
+          { status: StatusCodes.NOT_FOUND }
+        );
+      }
+      throw error;
     }
-
-    const latest = priceHistory[0];
-    if (!latest) {
-      return Response.json(
-        { message: "No price history available" },
-        { status: StatusCodes.NOT_FOUND }
-      );
-    }
-
-    const product: ProductResponse = {
-      url: url,
-      latest_price: latest.price,
-      latest_name: latest.name,
-      currency: latest.currency,
-      is_available: latest.is_available,
-      main_image_url: latest.main_image_url,
-    };
-
-    return Response.json({
-      product,
-      price_history: priceHistory,
-    }, { status: StatusCodes.OK });
 
   } catch (error) {
     console.error("Error getting product details:", error);
