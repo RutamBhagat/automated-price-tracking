@@ -121,7 +121,7 @@ async def add_product(url: str):
     except Exception as e:
         raise ScrapingError()
 
-@app.post("/api/v1/products/list", 
+@app.get("/api/v1/products", 
          response_model=List[ProductResponse],
          status_code=status.HTTP_200_OK)
 async def get_products():
