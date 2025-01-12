@@ -73,7 +73,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
 const AnimatedGradientStats: React.FC = () => {
   return (
-    <div className="h-full w-full bg-slate-950">
+    <div id="Stats" className="h-full w-full bg-slate-950">
       <div className="container mx-auto px-4">
         <div className="grid h-full grow grid-cols-1 md:grid-cols-3">
           <div className="md:col-span-2">

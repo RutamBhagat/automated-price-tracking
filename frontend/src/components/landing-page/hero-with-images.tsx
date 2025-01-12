@@ -11,7 +11,7 @@ function HeroWithImages() {
       <LampContainer className="min-h-[41dvh]">
         <></>
       </LampContainer>
-      <div className="w-full bg-slate-950">
+      <div id="Home" className="w-full bg-slate-950">
         <div className="container mx-auto -translate-y-20 px-4 lg:pb-20">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
             <div className="flex flex-col gap-4">
