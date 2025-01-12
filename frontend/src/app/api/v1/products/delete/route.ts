@@ -18,12 +18,22 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 
-    const success = await ProductService.removeProduct(url, session.user.id);
-    if (!success) {
-      return Response.json(
-        { message: "Product not found" },
-        { status: StatusCodes.NOT_FOUND }
-      );
+    try {
+      const success = await ProductService.removeProduct(url, session.user.id);
+      if (!success) {
+        return Response.json(
+          { message: "Failed to remove product tracking" },
+          { status: StatusCodes.BAD_REQUEST }
+        );
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message.includes("Record to delete does not exist")) {
+        return Response.json(
+          { message: "Product not found or not tracked by user" },
+          { status: StatusCodes.NOT_FOUND }
+        );
+      }
+      throw error;
     }
 
     return new Response(null, { status: StatusCodes.NO_CONTENT });
