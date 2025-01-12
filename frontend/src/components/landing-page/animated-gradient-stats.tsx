@@ -37,7 +37,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
   return (
     <motion.div
-      className="relative h-full overflow-hidden bg-zinc-900"
+      className="relative h-full overflow-hidden bg-slate-950"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
@@ -73,8 +73,8 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
 const AnimatedGradientStats: React.FC = () => {
   return (
-    <div className="h-full w-full bg-zinc-900">
-      <div className="mx-auto max-w-7xl px-4">
+    <div className="h-full w-full bg-slate-950">
+      <div className="container mx-auto px-4">
         <div className="grid h-full grow grid-cols-1 md:grid-cols-3">
           <div className="md:col-span-2">
             <BentoCard
