@@ -5,7 +5,7 @@ import { TextShimmer } from "@/components/ui/text-shimmer";
 
 export default function Footer() {
   return (
-    <footer id="Footer" className="bg-slate-950 pb-6 pt-48 text-white">
+    <footer id="Footer" className="relative bg-slate-950 pb-0 pt-48 text-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="col-span-1 space-y-6 md:col-span-2">
@@ -101,7 +101,7 @@ export default function Footer() {
           }}
           transition={{ delay: 0.4 }}
         >
-          <h1 className="select-none bg-gradient-to-b from-slate-700 to-slate-900 bg-clip-text text-center text-3xl font-bold text-transparent md:text-5xl lg:text-[10rem]">
+          <h1 className="select-none -mb-14 bg-gradient-to-b from-slate-700 via-slate-800 to-transparent bg-clip-text text-center text-3xl font-bold text-transparent md:text-5xl lg:text-[12rem]">
             PriceTracker
           </h1>
         </InView>
