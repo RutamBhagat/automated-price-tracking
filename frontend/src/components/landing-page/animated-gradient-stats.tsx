@@ -37,32 +37,32 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
   return (
     <motion.div
-      className="relative h-full overflow-hidden bg-black"
+      className="relative h-full overflow-hidden bg-zinc-900"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}
     >
       <AnimatedGradient colors={colors} speed={0.05} blur="medium" />
       <motion.div
-        className="relative z-10 p-3 text-white backdrop-blur-sm sm:p-5 md:p-8"
+        className="relative z-10 p-3 text-zinc-100 backdrop-blur-sm sm:p-5 md:p-8"
         variants={container}
         initial="hidden"
         animate="show"
       >
         <motion.h3
-          className="text-sm text-white sm:text-base md:text-lg"
+          className="text-sm text-zinc-200 sm:text-base md:text-lg"
           variants={item}
         >
           {title}
         </motion.h3>
         <motion.p
-          className="mb-4 text-2xl font-medium text-white sm:text-4xl md:text-5xl"
+          className="mb-4 text-2xl font-medium text-zinc-100 sm:text-4xl md:text-5xl"
           variants={item}
         >
           {value}
         </motion.p>
         {subtitle && (
-          <motion.p className="text-sm text-white/80" variants={item}>
+          <motion.p className="text-sm text-zinc-300" variants={item}>
             {subtitle}
           </motion.p>
         )}
@@ -73,46 +73,46 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
 const AnimatedGradientStats: React.FC = () => {
   return (
-    <div className="h-full w-full bg-black">
-      <div className="mx-auto max-w-7xl">
+    <div className="h-full w-full bg-zinc-900">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="grid h-full grow grid-cols-1 md:grid-cols-3">
           <div className="md:col-span-2">
             <BentoCard
-              title="Total Revenue"
-              value="$1,234,567"
-              subtitle="15% increase from last month"
+              title="Tracked Prices"
+              value="2,345"
+              subtitle="Total items monitored across all users"
               colors={["#3B82F6", "#60A5FA", "#93C5FD"]}
               delay={0.2}
             />
           </div>
           <BentoCard
-            title="New Users"
-            value={1234}
-            subtitle="Daily signups"
+            title="Alerts Sent"
+            value="12,456"
+            subtitle="Notifications delivered this month"
             colors={["#60A5FA", "#34D399", "#93C5FD"]}
             delay={0.4}
           />
           <BentoCard
-            title="Conversion Rate"
-            value="3.45%"
-            subtitle="0.5% increase from last week"
+            title="User Engagement"
+            value="78%"
+            subtitle="Users actively engaging with notifications"
             colors={["#F59E0B", "#A78BFA", "#FCD34D"]}
             delay={0.6}
           />
           <div className="md:col-span-2">
             <BentoCard
-              title="Active Projects"
-              value={42}
-              subtitle="8 completed this month"
+              title="Favorite Categories"
+              value="Electronics & Fashion"
+              subtitle="Most tracked product categories"
               colors={["#3B82F6", "#A78BFA", "#FBCFE8"]}
               delay={0.8}
             />
           </div>
           <div className="md:col-span-3">
             <BentoCard
-              title="Customer Satisfaction"
-              value="4.8/5"
-              subtitle="Based on 1,000+ reviews from verified customers across all product categories"
+              title="Savings Achieved"
+              value="$89,567"
+              subtitle="Estimated savings by users this month"
               colors={["#EC4899", "#F472B6", "#3B82F6"]}
               delay={1}
             />
