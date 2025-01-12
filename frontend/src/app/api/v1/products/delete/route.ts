@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 

@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse URL from body
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 
