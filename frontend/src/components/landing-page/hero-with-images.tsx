@@ -1,5 +1,5 @@
 "use client";
-import { MoveRight, PhoneCall } from "lucide-react";
+import { MoveRight, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
@@ -75,7 +75,7 @@ function HeroWithImages() {
                   className="gap-4 border-[#0e8ba0] text-[#0e8ba0] hover:bg-[#0e8ba0] hover:text-white"
                   variant="outline"
                 >
-                  Learn More <PhoneCall className="h-4 w-4" />
+                  Learn More <Info className="h-4 w-4" />
                 </Button>
                 <Button
                   size="lg"
