@@ -54,13 +54,10 @@ export class ProductService {
   /**
    * Get price history for a product
    */
-  static async getPriceHistory(url: string, userId: string) {
+  static async getPriceHistory(url: string) {
     return await db.priceHistory.findMany({
       where: {
         product_url: url,
-        product: {
-          userId,
-        },
       },
       orderBy: {
         timestamp: "desc",
