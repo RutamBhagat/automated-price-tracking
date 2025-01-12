@@ -9,8 +9,8 @@ import { Badge } from "@/components/ui/badge";
 export function HeroWithLamp() {
   return (
     <div className="w-full bg-slate-950">
-      <div className="h-screen">
-        <LampContainer>
+      <div className="">
+        <LampContainer className="min-h-[61dvh]">
           <motion.h1
             initial={{ opacity: 0.5, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -21,12 +21,12 @@ export function HeroWithLamp() {
             }}
             className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text py-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
           >
-            Smart Price Tracking <br /> Simplified
+            Price Tracking <br /> Simplified
           </motion.h1>
         </LampContainer>
       </div>
 
-      <div className="container mx-auto px-4 pb-20 lg:pb-40">
+      <div className="container mx-auto -translate-y-28 px-4 pb-20 lg:pb-40">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
           <div className="flex flex-col gap-4">
             <div>
