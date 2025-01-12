@@ -4,7 +4,7 @@ from fastapi import FastAPI, Query, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import List, Optional
 from datetime import datetime
 
@@ -92,6 +92,17 @@ class ProductDetailResponse(BaseModel):
     product: ProductResponse
     price_history: List[PriceHistoryResponse]
 
+# Request Models
+class URLRequest(BaseModel):
+    url: str
+
+    @field_validator('url')
+    @classmethod
+    def validate_url(cls, v: str) -> str:
+        if not is_valid_url(v):
+            raise ValueError('Invalid URL format')
+        return v
+
 # Endpoints
 @app.post("/api/v1/products", 
           response_model=ProductResponse,
@@ -101,12 +112,9 @@ class ProductDetailResponse(BaseModel):
               503: {"description": "Scraping error"},
               422: {"description": "Validation error"}
           })
-async def add_product(url: str):
-    if not is_valid_url(url):
-        raise InvalidURLError()
-    
+async def add_product(request: URLRequest):
     try:
-        product_data = scrape_product(url)
+        product_data = scrape_product(request.url)
         db.add_product(product_data["url"])
         db.add_price(product_data)
         
@@ -149,14 +157,14 @@ async def get_products():
          response_model=ProductDetailResponse,
          status_code=status.HTTP_200_OK,
          responses={404: {"description": "Product not found"}})
-async def get_product_details(url: str):
-    price_history = db.get_price_history(url)
-    if not price_history:
+async def get_product_details(request: URLRequest):
+    price_history = db.get_price_history(request.url)
+    if not price_history or len(price_history) == 0:
         raise ProductNotFoundError()
     
     latest = price_history[0]
     product = ProductResponse(
-        url=url,
+        url=request.url,
         latest_price=latest.price,
         latest_name=latest.name,
         currency=latest.currency,
@@ -180,8 +188,8 @@ async def get_product_details(url: str):
 @app.post("/api/v1/products/delete",
             status_code=status.HTTP_204_NO_CONTENT,
             responses={404: {"description": "Product not found"}})
-async def remove_product(url: str):
-    success = db.remove_product(url)
+async def remove_product(request: URLRequest):
+    success = db.remove_product(request.url)
     if not success:
         raise ProductNotFoundError()
     return None
@@ -194,11 +202,11 @@ async def remove_product(url: str):
              422: {"description": "Invalid pagination parameters"}
          })
 async def get_price_history(
-    url: str, 
+    request: URLRequest,
     limit: Optional[int] = Query(None, ge=1),
     offset: Optional[int] = Query(0, ge=0)
 ):
-    price_history = db.get_price_history(url)
+    price_history = db.get_price_history(request.url)
     if not price_history:
         raise ProductNotFoundError()
     
