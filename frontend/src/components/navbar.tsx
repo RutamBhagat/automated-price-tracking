@@ -10,11 +10,12 @@ export default function Navbar() {
   const navItems = [
     { href: "/#Hero", label: "Home" },
     { href: "/#Stats", label: "Stats" },
+    { href: "/dashboard", label: "Dashboard" },
   ];
 
   return (
     <nav className="fixed z-50 w-full bg-slate-950 border-b border-slate-800 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto container px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-1">
             <span className="text-2xl font-bold text-white">
@@ -41,14 +42,6 @@ export default function Navbar() {
                       className="w-24 border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white"
                     >
                       Login
-                    </Button>
-                  </Link>
-                  <Link href="/dashboard">
-                    <Button
-                      variant="default"
-                      className="w-24 bg-slate-200 text-slate-900 hover:bg-white"
-                    >
-                      Try it Now
                     </Button>
                   </Link>
                 </div>
@@ -118,14 +111,6 @@ export default function Navbar() {
                   className="w-full border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white"
                 >
                   Login
-                </Button>
-              </Link>
-              <Link href="/dashboard">
-                <Button
-                  variant="default"
-                  className="w-full bg-slate-200 text-slate-900 hover:bg-white"
-                >
-                  Try it Now
                 </Button>
               </Link>
             </div>

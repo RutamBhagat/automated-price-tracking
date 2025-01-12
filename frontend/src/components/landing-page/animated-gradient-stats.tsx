@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 
 import { AnimatedGradient } from "@/components/ui/animated-gradient-with-svg";
+import { InView } from "../ui/in-view";
 
 interface BentoCardProps {
   title: string;
@@ -74,51 +75,58 @@ const BentoCard: React.FC<BentoCardProps> = ({
 const AnimatedGradientStats: React.FC = () => {
   return (
     <div id="Stats" className="h-full w-full bg-slate-950">
-      <div className="container mx-auto px-4">
-        <div className="grid h-full grow grid-cols-1 md:grid-cols-3">
-          <div className="md:col-span-2">
+      <InView
+        variants={{
+          hidden: { opacity: 0, x: -20 },
+          visible: { opacity: 1, x: 0 },
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="grid h-full grow grid-cols-1 md:grid-cols-3">
+            <div className="md:col-span-2">
+              <BentoCard
+                title="Tracked Prices"
+                value="2,345"
+                subtitle="Total items monitored across all users"
+                colors={["#3B82F6", "#60A5FA", "#93C5FD"]}
+                delay={0.2}
+              />
+            </div>
             <BentoCard
-              title="Tracked Prices"
-              value="2,345"
-              subtitle="Total items monitored across all users"
-              colors={["#3B82F6", "#60A5FA", "#93C5FD"]}
-              delay={0.2}
+              title="Alerts Sent"
+              value="12,456"
+              subtitle="Notifications delivered this month"
+              colors={["#60A5FA", "#34D399", "#93C5FD"]}
+              delay={0.4}
             />
-          </div>
-          <BentoCard
-            title="Alerts Sent"
-            value="12,456"
-            subtitle="Notifications delivered this month"
-            colors={["#60A5FA", "#34D399", "#93C5FD"]}
-            delay={0.4}
-          />
-          <BentoCard
-            title="User Engagement"
-            value="78%"
-            subtitle="Users actively engaging with notifications"
-            colors={["#F59E0B", "#A78BFA", "#FCD34D"]}
-            delay={0.6}
-          />
-          <div className="md:col-span-2">
             <BentoCard
-              title="Favorite Categories"
-              value="Electronics & Fashion"
-              subtitle="Most tracked product categories"
-              colors={["#3B82F6", "#A78BFA", "#FBCFE8"]}
-              delay={0.8}
+              title="User Engagement"
+              value="78%"
+              subtitle="Users actively engaging with notifications"
+              colors={["#F59E0B", "#A78BFA", "#FCD34D"]}
+              delay={0.6}
             />
-          </div>
-          <div className="md:col-span-3">
-            <BentoCard
-              title="Savings Achieved"
-              value="$89,567"
-              subtitle="Estimated savings by users this month"
-              colors={["#EC4899", "#F472B6", "#3B82F6"]}
-              delay={1}
-            />
+            <div className="md:col-span-2">
+              <BentoCard
+                title="Favorite Categories"
+                value="Electronics & Fashion"
+                subtitle="Most tracked product categories"
+                colors={["#3B82F6", "#A78BFA", "#FBCFE8"]}
+                delay={0.8}
+              />
+            </div>
+            <div className="md:col-span-3">
+              <BentoCard
+                title="Savings Achieved"
+                value="$89,567"
+                subtitle="Estimated savings by users this month"
+                colors={["#EC4899", "#F472B6", "#3B82F6"]}
+                delay={1}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </InView>
     </div>
   );
 };
