@@ -1,4 +1,4 @@
-import CallToActionSection from "@/components/landing-page/call-to-action";
+import { AnimatedGradientStats } from "@/components/landing-page/animated-gradient-stats";
 import DemoSection from "@/components/landing-page/demo-section";
 import FAQSection from "@/components/landing-page/faq-section";
 import FeaturesSection from "@/components/landing-page/features-section";
@@ -13,7 +13,7 @@ export default function Home() {
       <FeaturesSection />
       <DemoSection />
       <HowItWorksSection />
-      <CallToActionSection />
+      <AnimatedGradientStats />
       <FAQSection />
       <Footer />
     </main>
