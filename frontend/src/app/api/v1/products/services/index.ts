@@ -159,4 +159,30 @@ export class ProductService {
       throw error;
     }
   }
+
+  /**
+   * Get all products with their latest prices
+   */
+  static async getAllProductsPublic() {
+    try {
+      return await db.product.findMany({
+        include: {
+          prices: {
+            orderBy: {
+              timestamp: "desc"
+            },
+            take: 1  // Only get the latest price
+          },
+          _count: {
+            select: {
+              userProducts: true  // Count how many users are tracking this product
+            }
+          }
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching all products:", error);
+      throw error;
+    }
+  }
 }
