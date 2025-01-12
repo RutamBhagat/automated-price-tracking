@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { LampContainer } from "../ui/lamp";
+import Image from "next/image";
 
 function HeroWithImages() {
   return (
@@ -93,11 +94,29 @@ function HeroWithImages() {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="grid grid-cols-2 gap-8"
+              className="grid grid-cols-2 place-content-center place-items-center gap-12"
             >
-              <div className="aspect-square rounded-md bg-gray-900"></div>
-              <div className="row-span-2 rounded-md bg-gray-900"></div>
-              <div className="aspect-square rounded-md bg-gray-900"></div>
+              <Image
+                src="/1.jpg"
+                alt="Feature image 1"
+                width={300}
+                height={800}
+                className="aspect-square rounded-md object-cover"
+              />
+              <Image
+                src="/2.jpg"
+                alt="Feature image 2"
+                width={300}
+                height={800}
+                className="row-span-2 rounded-md object-cover"
+              />
+              <Image
+                src="/3.jpg"
+                alt="Feature image 3"
+                width={300}
+                height={800}
+                className="aspect-square rounded-md object-cover"
+              />
             </motion.div>
           </div>
         </div>
