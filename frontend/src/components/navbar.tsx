@@ -3,9 +3,26 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useSession, signOut } from "next-auth/react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { 
+  LogIn, 
+  LogOut, 
+  Home, 
+  BarChart, 
+  LayoutDashboard, 
+  Menu 
+} from "lucide-react";
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { status } = useSession();
+  // Remove isMobileMenuOpen state as Sheet handles this internally
 
   const navItems = [
     { href: "/#Hero", label: "Home" },
@@ -23,100 +40,100 @@ export default function Navbar() {
             </span>
           </div>
           <div className="hidden md:block">
-            <div className="rounded-lg">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    data-id={item.href}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+            <div className="flex items-center">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  data-id={item.href}
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="ml-4">
+                {status === "authenticated" ? (
+                  <Button
+                    onClick={() => signOut()}
+                    variant="outline"
+                    className="flex items-center gap-2 text-slate-950 bg-white hover:bg-slate-200 hover:text-slate-950"
                   >
-                    {item.label}
-                  </Link>
-                ))}
-                <div className="flex items-center gap-2">
-                  <Link href="/login">
+                    <LogOut className="h-4 w-4" />
+                    Sign out
+                  </Button>
+                ) : (
+                  <Link href="/auth/signin">
                     <Button
                       variant="outline"
-                      className="w-24 border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white"
+                      className="flex items-center gap-2 text-slate-950 bg-white hover:bg-slate-200 hover:text-slate-950"
                     >
-                      Login
+                      <LogIn className="h-4 w-4" />
+                      Sign in
                     </Button>
                   </Link>
-                </div>
+                )}
               </div>
             </div>
           </div>
           <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-400 hover:text-white"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent 
+                side="right" 
+                className="w-72 p-0 min-h-[100dvh] max-h-[100dvh] bg-slate-900 border-slate-800"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
+                <div className="flex flex-col h-full">
+                  <SheetHeader className="p-6 border-b border-slate-800">
+                    <SheetTitle className="text-xl font-bold text-white">
+                      🔥 PriceTracker
+                    </SheetTitle>
+                  </SheetHeader>
+                  
+                  <nav className="flex-1 px-2 py-4 overflow-y-auto">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        {item.href.includes('Hero') && <Home className="h-5 w-5" />}
+                        {item.href.includes('Stats') && <BarChart className="h-5 w-5" />}
+                        {item.href.includes('dashboard') && <LayoutDashboard className="h-5 w-5" />}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </nav>
+
+                  <div className="p-4 border-t border-slate-800">
+                    {status === "authenticated" ? (
+                      <Button
+                        onClick={() => signOut()}
+                        className="w-full bg-white text-slate-900 hover:bg-slate-200 transition-colors"
+                      >
+                        <LogOut className="h-5 w-5 mr-2" />
+                        Sign out
+                      </Button>
+                    ) : (
+                      <Link href="/auth/signin" className="w-full block">
+                        <Button
+                          className="w-full bg-white text-slate-900 hover:bg-slate-200 transition-colors"
+                        >
+                          <LogIn className="h-5 w-5 mr-2" />
+                          Sign in
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-
-      {isMobileMenuOpen && (
-        <div className="bg-slate-900 md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <Link
-              href="#Hero"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
-            >
-              Home
-            </Link>
-            <Link
-              href="#Features"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
-            >
-              Features
-            </Link>
-            <Link
-              href="#Demo"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
-            >
-              Demo
-            </Link>
-            <Link
-              href="#HowItWorks"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
-            >
-              How It Works
-            </Link>
-            <Link
-              href="#FAQ"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:text-white"
-            >
-              FAQ
-            </Link>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  className="w-full border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white"
-                >
-                  Login
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }

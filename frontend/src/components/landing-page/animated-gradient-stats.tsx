@@ -74,7 +74,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
 const AnimatedGradientStats: React.FC = () => {
   return (
-    <div id="Stats" className="h-full w-full bg-slate-950">
+    <div id="Stats" className="h-full w-full bg-slate-950 py-20 md:py-40">
       <InView
         variants={{
           hidden: { opacity: 0, x: -20 },

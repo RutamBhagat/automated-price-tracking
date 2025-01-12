@@ -5,7 +5,7 @@ import { TextShimmer } from "@/components/ui/text-shimmer";
 
 export default function Footer() {
   return (
-    <footer id="Footer" className="relative bg-slate-950 pb-0 pt-48 text-white overflow-hidden">
+    <footer id="Footer" className="relative bg-slate-950  text-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="col-span-1 space-y-6 md:col-span-2">
