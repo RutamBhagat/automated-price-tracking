@@ -7,7 +7,15 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
-    domains: ['dummyimage.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "dummyimage.com",
+        port: "",
+        pathname: "/**",
+        search: "",
+      },
+    ],
   },
 };
 

@@ -1,13 +1,13 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { TextEffect } from "@/components/ui/text-effect";
 import { InView } from "@/components/ui/in-view";
 import { TextShimmer } from "@/components/ui/text-shimmer";
+import GoogleButton from "@/components/login-page/google-button";
 
 export default function Page() {
   return (
-    <div className="flex relative min-h-screen w-full flex-col-reverse lg:grid lg:grid-cols-2">
+    <div className="relative flex min-h-screen w-full flex-col-reverse lg:grid lg:grid-cols-2">
       <div className="fixed left-6 top-6 z-50 text-3xl sm:left-8 sm:top-8 sm:text-4xl lg:left-10 lg:top-10">
         🔥
       </div>
@@ -81,19 +81,7 @@ export default function Page() {
               </p>
             </div>
 
-            <Button
-              variant="outline"
-              className="w-full justify-center gap-3 border-zinc-300 bg-white py-5 text-sm font-medium shadow-sm transition-all duration-200 hover:bg-zinc-50 sm:py-6 sm:text-base"
-            >
-              <Image
-                src="/google.svg"
-                alt="Google"
-                width={20}
-                height={20}
-                className="h-5 w-5"
-              />
-              Continue with Google
-            </Button>
+            <GoogleButton />
 
             <div className="text-xs text-zinc-600 sm:text-sm">
               By continuing, you agree to our{" "}

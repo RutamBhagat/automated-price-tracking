@@ -38,18 +38,22 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    className="w-24 border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    variant="default"
-                    className="w-24 bg-neutral-200 text-neutral-900 hover:bg-white"
-                  >
-                    Try it Now
-                  </Button>
+                  <Link href="/login">
+                    <Button
+                      variant="outline"
+                      className="w-24 border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/dashboard">
+                    <Button
+                      variant="default"
+                      className="w-24 bg-neutral-200 text-neutral-900 hover:bg-white"
+                    >
+                      Try it Now
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -111,18 +115,22 @@ export default function Navbar() {
               FAQ
             </Link>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                className="w-full border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
-              >
-                Login
-              </Button>
-              <Button
-                variant="default"
-                className="w-full bg-neutral-200 text-neutral-900 hover:bg-white"
-              >
-                Try it Now
-              </Button>
+              <Link href="/login">
+                <Button
+                  variant="outline"
+                  className="w-full border-neutral-700 bg-neutral-800 text-neutral-200 hover:bg-neutral-700 hover:text-white"
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button
+                  variant="default"
+                  className="w-full bg-neutral-200 text-neutral-900 hover:bg-white"
+                >
+                  Try it Now
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
