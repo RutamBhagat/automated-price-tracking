@@ -50,6 +50,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    products      Product[]
 }
 
 model VerificationToken {
@@ -62,6 +63,8 @@ model VerificationToken {
 
 model Product {
     url         String         @id
+    userId      String
+    user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
     prices      PriceHistory[]
 }
 
