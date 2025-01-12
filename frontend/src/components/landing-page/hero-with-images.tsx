@@ -94,28 +94,30 @@ function HeroWithImages() {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="grid grid-cols-2 place-content-center place-items-center gap-12"
+              className="flex justify-center items-center gap-12"
             >
-              <Image
-                src="/1.jpg"
-                alt="Feature image 1"
-                width={300}
-                height={800}
-                className="aspect-square rounded-md object-cover"
-              />
+              <div className="flex flex-col gap-12">
+                <Image
+                  src="/1.jpg"
+                  alt="Feature image 1"
+                  width={300}
+                  height={800}
+                  className="rounded-md object-cover h-[300px]"
+                />
+                <Image
+                  src="/3.jpg"
+                  alt="Feature image 3"
+                  width={300}
+                  height={800}
+                  className="rounded-md object-cover h-[300px]"
+                />
+              </div>
               <Image
                 src="/2.jpg"
                 alt="Feature image 2"
                 width={300}
                 height={800}
-                className="row-span-2 rounded-md object-cover"
-              />
-              <Image
-                src="/3.jpg"
-                alt="Feature image 3"
-                width={300}
-                height={800}
-                className="aspect-square rounded-md object-cover"
+                className="rounded-md object-cover h-[640px]"
               />
             </motion.div>
           </div>
