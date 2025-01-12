@@ -121,7 +121,7 @@ async def add_product(url: str):
     except Exception as e:
         raise ScrapingError()
 
-@app.get("/api/v1/products", 
+@app.post("/api/v1/products/list", 
          response_model=List[ProductResponse],
          status_code=status.HTTP_200_OK)
 async def get_products():
@@ -145,7 +145,7 @@ async def get_products():
     
     return response
 
-@app.get("/api/v1/products/{url:path}", 
+@app.post("/api/v1/products/details", 
          response_model=ProductDetailResponse,
          status_code=status.HTTP_200_OK,
          responses={404: {"description": "Product not found"}})
@@ -177,7 +177,7 @@ async def get_product_details(url: str):
     
     return ProductDetailResponse(product=product, price_history=history)
 
-@app.delete("/api/v1/products/{url:path}",
+@app.post("/api/v1/products/delete",
             status_code=status.HTTP_204_NO_CONTENT,
             responses={404: {"description": "Product not found"}})
 async def remove_product(url: str):
@@ -186,7 +186,7 @@ async def remove_product(url: str):
         raise ProductNotFoundError()
     return None
 
-@app.get("/api/v1/products/{url:path}/price-history", 
+@app.post("/api/v1/products/price-history", 
          response_model=List[PriceHistoryResponse],
          status_code=status.HTTP_200_OK,
          responses={
