@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Flame } from "lucide-react";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,12 +16,13 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed z-50 w-full bg-slate-950 backdrop-blur-sm">
+    <nav className="fixed z-50 w-full bg-slate-950 border-b border-slate-800 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-1">
-            <Flame className="h-8 w-8 text-orange-600" />
-            <span className="text-2xl font-bold text-white">PriceTracker</span>
+            <span className="text-2xl font-bold text-white">
+              🔥 PriceTracker
+            </span>
           </div>
           <div className="hidden md:block">
             <div className="rounded-lg">
