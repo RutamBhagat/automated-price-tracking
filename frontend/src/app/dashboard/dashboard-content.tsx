@@ -53,12 +53,12 @@ export function DashboardContent({ userName }: DashboardContentProps) {
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative mx-auto max-w-7xl space-y-8 px-8 pt-24"
+        className="relative mx-auto max-w-7xl px-8 pt-24"
       >
         {/* Welcome Section */}
         <motion.div
           variants={item}
-          className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-2xl"
+          className="flex items-center justify-between border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-2xl [&>*]:rounded-none"
         >
           <div>
             <h1 className="text-4xl font-bold text-white">
@@ -70,7 +70,7 @@ export function DashboardContent({ userName }: DashboardContentProps) {
           </div>
           <Button
             size="lg"
-            className="gap-2 bg-white/10 text-white hover:bg-white/20"
+            className="gap-2 rounded-none bg-white/10 text-white hover:bg-white/20"
           >
             <Plus className="h-5 w-5" /> Add Product
           </Button>
@@ -232,22 +232,22 @@ export function DashboardContent({ userName }: DashboardContentProps) {
         </div>
 
         {/* Recent Products & Activity */}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid md:grid-cols-2">
           <motion.div variants={item}>
-            <Card className="h-full border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl">
+            <Card className="h-full rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
               <CardHeader>
                 <CardTitle>Recent Products</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-0">
                   {/* Product Items */}
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="flex cursor-pointer items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4"
+                      className="flex cursor-pointer items-center justify-between border border-white/10 bg-white/5 p-4"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="h-10 w-10 rounded-full bg-blue-500/20" />
+                        <div className="h-10 w-10 bg-blue-500/20" />
                         <div>
                           <p className="font-medium">Product {i}</p>
                           <p className="text-sm text-blue-200">$199.99</p>
@@ -255,7 +255,7 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                       </div>
                       <Badge
                         variant="outline"
-                        className="border-blue-200 text-blue-200"
+                        className="rounded-none border-blue-200 text-blue-200"
                       >
                         -5%
                       </Badge>
@@ -267,15 +267,15 @@ export function DashboardContent({ userName }: DashboardContentProps) {
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="h-full border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl">
+            <Card className="h-full rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
               <CardHeader>
                 <CardTitle>Recent Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-0">
                   {/* Activity Items */}
-                  <div className="flex cursor-pointer items-center space-x-4 rounded-lg border border-white/5 p-2">
-                    <div className="rounded-full bg-green-500/20 p-2">
+                  <div className="flex cursor-pointer items-center space-x-4 border border-white/5 p-2">
+                    <div className="bg-green-500/20 p-2">
                       <ShoppingCart className="h-4 w-4 text-green-200" />
                     </div>
                     <div>
@@ -283,8 +283,8 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                       <p className="text-sm text-blue-200">2 minutes ago</p>
                     </div>
                   </div>
-                  <div className="flex cursor-pointer items-center space-x-4 rounded-lg border border-white/5 p-2">
-                    <div className="rounded-full bg-blue-500/20 p-2">
+                  <div className="flex cursor-pointer items-center space-x-4 border border-white/5 p-2">
+                    <div className="bg-blue-500/20 p-2">
                       <Bell className="h-4 w-4 text-blue-200" />
                     </div>
                     <div>
@@ -292,8 +292,8 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                       <p className="text-sm text-blue-200">1 hour ago</p>
                     </div>
                   </div>
-                  <div className="flex cursor-pointer items-center space-x-4 rounded-lg border border-white/5 p-2">
-                    <div className="rounded-full bg-orange-500/20 p-2">
+                  <div className="flex cursor-pointer items-center space-x-4 border border-white/5 p-2">
+                    <div className="bg-orange-500/20 p-2">
                       <Truck className="h-4 w-4 text-orange-200" />
                     </div>
                     <div>
@@ -309,13 +309,13 @@ export function DashboardContent({ userName }: DashboardContentProps) {
 
         {/* Price History Chart */}
         <motion.div variants={item}>
-          <Card className="border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl">
+          <Card className="rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>Price History</CardTitle>
               <BarChart3 className="h-4 w-4 text-blue-200" />
             </CardHeader>
             <CardContent>
-              <div className="h-[200px] w-full rounded-xl bg-white/10" />
+              <div className="h-[200px] w-full bg-white/10" />
             </CardContent>
           </Card>
         </motion.div>
