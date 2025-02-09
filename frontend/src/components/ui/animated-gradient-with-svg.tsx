@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { useDimensions } from "@/hooks/use-debounced-dimensions";
@@ -22,15 +24,15 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
 
   const circleSize = useMemo(
     () => Math.max(dimensions.width, dimensions.height),
-    [dimensions.width, dimensions.height]
+    [dimensions.width, dimensions.height],
   );
 
   const blurClass =
     blur === "light"
       ? "blur-2xl"
       : blur === "medium"
-      ? "blur-3xl"
-      : "blur-[100px]";
+        ? "blur-3xl"
+        : "blur-[100px]";
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden">

@@ -1,21 +1,16 @@
 import React from "react";
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
+import { DashboardContent } from "./dashboard-content";
 
-export default async function page() {
+export default async function DashboardPage() {
   const session = await auth();
 
   if (!session) {
     redirect("/login");
   }
 
-  return (
-    <>
-      <div className="grid min-h-[calc(100vh-4rem)] auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-      </div>
-    </>
-  );
+  const firstName = session.user?.name?.split(" ")[0] ?? "there";
+
+  return <DashboardContent userName={firstName} />;
 }
