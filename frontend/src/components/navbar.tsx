@@ -11,13 +11,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { 
-  LogIn, 
-  LogOut, 
-  Home, 
-  BarChart, 
-  LayoutDashboard, 
-  Menu 
+import {
+  LogIn,
+  LogOut,
+  Home,
+  BarChart,
+  LayoutDashboard,
+  Menu,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -31,8 +31,8 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed z-50 w-full bg-slate-950 border-b border-slate-800 backdrop-blur-sm">
-      <div className="mx-auto container px-4 sm:px-6 lg:px-8">
+    <nav className="fixed z-50 w-full bg-slate-950 backdrop-blur-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-1">
             <span className="text-2xl font-bold text-white">
@@ -56,7 +56,7 @@ export default function Navbar() {
                   <Button
                     onClick={() => signOut()}
                     variant="outline"
-                    className="flex items-center gap-2 text-slate-950 bg-white hover:bg-slate-200 hover:text-slate-950"
+                    className="flex items-center gap-2 bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
                   >
                     <LogOut className="h-4 w-4" />
                     Sign out
@@ -65,7 +65,7 @@ export default function Navbar() {
                   <Link href="/auth/signin">
                     <Button
                       variant="outline"
-                      className="flex items-center gap-2 text-slate-950 bg-white hover:bg-slate-200 hover:text-slate-950"
+                      className="flex items-center gap-2 bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
                     >
                       <LogIn className="h-4 w-4" />
                       Sign in
@@ -78,51 +78,59 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-400 hover:text-white"
+                >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent 
-                side="right" 
-                className="w-72 p-0 min-h-[100dvh] max-h-[100dvh] bg-slate-900 border-slate-800"
+              <SheetContent
+                side="right"
+                className="max-h-[100dvh] min-h-[100dvh] w-72 border-slate-800 bg-slate-900 p-0"
               >
-                <div className="flex flex-col h-full">
-                  <SheetHeader className="p-6 border-b border-slate-800">
+                <div className="flex h-full flex-col">
+                  <SheetHeader className="border-b border-slate-800 p-6">
                     <SheetTitle className="text-xl font-bold text-white">
                       🔥 PriceTracker
                     </SheetTitle>
                   </SheetHeader>
-                  
-                  <nav className="flex-1 px-2 py-4 overflow-y-auto">
+
+                  <nav className="flex-1 overflow-y-auto px-2 py-4">
                     {navItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                        className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-colors hover:bg-slate-800 hover:text-white"
                       >
-                        {item.href.includes('Hero') && <Home className="h-5 w-5" />}
-                        {item.href.includes('Stats') && <BarChart className="h-5 w-5" />}
-                        {item.href.includes('dashboard') && <LayoutDashboard className="h-5 w-5" />}
+                        {item.href.includes("Hero") && (
+                          <Home className="h-5 w-5" />
+                        )}
+                        {item.href.includes("Stats") && (
+                          <BarChart className="h-5 w-5" />
+                        )}
+                        {item.href.includes("dashboard") && (
+                          <LayoutDashboard className="h-5 w-5" />
+                        )}
                         {item.label}
                       </Link>
                     ))}
                   </nav>
 
-                  <div className="p-4 border-t border-slate-800">
+                  <div className="border-t border-slate-800 p-4">
                     {status === "authenticated" ? (
                       <Button
                         onClick={() => signOut()}
-                        className="w-full bg-white text-slate-900 hover:bg-slate-200 transition-colors"
+                        className="w-full bg-white text-slate-900 transition-colors hover:bg-slate-200"
                       >
-                        <LogOut className="h-5 w-5 mr-2" />
+                        <LogOut className="mr-2 h-5 w-5" />
                         Sign out
                       </Button>
                     ) : (
-                      <Link href="/auth/signin" className="w-full block">
-                        <Button
-                          className="w-full bg-white text-slate-900 hover:bg-slate-200 transition-colors"
-                        >
-                          <LogIn className="h-5 w-5 mr-2" />
+                      <Link href="/auth/signin" className="block w-full">
+                        <Button className="w-full bg-white text-slate-900 transition-colors hover:bg-slate-200">
+                          <LogIn className="mr-2 h-5 w-5" />
                           Sign in
                         </Button>
                       </Link>

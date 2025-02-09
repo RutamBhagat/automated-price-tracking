@@ -17,6 +17,7 @@ export const env = createEnv({
     FIRECRAWL_API_KEY: z.string(),
     EMAIL_ADDRESS: z.string().email(),
     EMAIL_APP_PASSWORD: z.string(),
+    RESEND_API_KEY: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -43,6 +44,7 @@ export const env = createEnv({
     FIRECRAWL_API_KEY: process.env.FIRECRAWL_API_KEY,
     EMAIL_ADDRESS: process.env.EMAIL_ADDRESS,
     EMAIL_APP_PASSWORD: process.env.EMAIL_APP_PASSWORD,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
