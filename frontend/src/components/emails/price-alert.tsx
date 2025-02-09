@@ -17,6 +17,7 @@ interface PriceAlertEmailProps {
   url: string;
   currency: string;
   mainImageUrl?: string;
+  dropPercentage: number;
 }
 
 export const PriceAlertEmail: React.FC<Readonly<PriceAlertEmailProps>> = ({
@@ -26,8 +27,8 @@ export const PriceAlertEmail: React.FC<Readonly<PriceAlertEmailProps>> = ({
   url,
   currency,
   mainImageUrl,
+  dropPercentage,
 }) => {
-  const dropPercentage = ((oldPrice - newPrice) / oldPrice) * 100;
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currency,

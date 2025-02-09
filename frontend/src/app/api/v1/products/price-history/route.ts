@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     if (!session?.user?.id) {
       return Response.json(
         { message: "Unauthorized" },
-        { status: StatusCodes.UNAUTHORIZED }
+        { status: StatusCodes.UNAUTHORIZED },
       );
     }
 
@@ -27,40 +27,41 @@ export async function POST(request: NextRequest) {
 
     try {
       const priceHistory = await ProductService.getPriceHistory(url);
-      
+
       // Apply pagination if limit is specified
-      const paginatedHistory = limit 
+      const paginatedHistory = limit
         ? priceHistory.slice(offset, offset + limit)
         : priceHistory;
 
-      return Response.json({
-        total: priceHistory.length,
-        items: paginatedHistory,
-      }, { status: StatusCodes.OK });
-
+      return Response.json(
+        {
+          total: priceHistory.length,
+          items: paginatedHistory,
+        },
+        { status: StatusCodes.OK },
+      );
     } catch (error) {
       if (error instanceof Error && error.message === "Product not found") {
         return Response.json(
           { message: "Product not found" },
-          { status: StatusCodes.NOT_FOUND }
+          { status: StatusCodes.NOT_FOUND },
         );
       }
       throw error;
     }
-
   } catch (error) {
     console.error("Error getting price history:", error);
 
     if (error instanceof z.ZodError) {
       return Response.json(
         { message: "Validation error", details: error.errors },
-        { status: StatusCodes.UNPROCESSABLE_ENTITY }
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
       );
     }
 
     return Response.json(
       { message: "Internal Server Error" },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
     );
   }
 }

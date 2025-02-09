@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     if (!session?.user?.id) {
       return Response.json(
         { message: "Unauthorized" },
-        { status: StatusCodes.UNAUTHORIZED }
+        { status: StatusCodes.UNAUTHORIZED },
       );
     }
 
@@ -23,34 +23,36 @@ export async function POST(request: NextRequest) {
       if (!success) {
         return Response.json(
           { message: "Failed to remove product tracking" },
-          { status: StatusCodes.BAD_REQUEST }
+          { status: StatusCodes.BAD_REQUEST },
         );
       }
     } catch (error) {
-      if (error instanceof Error && error.message.includes("Record to delete does not exist")) {
+      if (
+        error instanceof Error &&
+        error.message.includes("Record to delete does not exist")
+      ) {
         return Response.json(
           { message: "Product not found or not tracked by user" },
-          { status: StatusCodes.NOT_FOUND }
+          { status: StatusCodes.NOT_FOUND },
         );
       }
       throw error;
     }
 
     return new Response(null, { status: StatusCodes.NO_CONTENT });
-
   } catch (error) {
     console.error("Error deleting product:", error);
 
     if (error instanceof z.ZodError) {
       return Response.json(
         { message: "Validation error", details: error.errors },
-        { status: StatusCodes.UNPROCESSABLE_ENTITY }
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
       );
     }
 
     return Response.json(
       { message: "Internal Server Error" },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
     );
   }
 }

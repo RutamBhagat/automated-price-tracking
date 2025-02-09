@@ -1,47 +1,78 @@
 import { Resend } from "resend";
-import { PriceAlertEmail } from "@/components/emails/price-alert";
-import { NextResponse } from "next/server";
+import { PriceAlertEmail as PriceAlert } from "@/components/emails/price-alert";
+import { StatusCodes } from "http-status-codes";
+import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Use test email only if EMAIL_FROM is not set
 const FROM_EMAIL = process.env.EMAIL_FROM || "onboarding@resend.dev";
 
+const PriceAlertSchema = z.object({
+  productName: z.string().min(1, "Product name is required"),
+  oldPrice: z.number().positive("Old price must be positive"),
+  newPrice: z.number().positive("New price must be positive"),
+  url: z.string().url("Invalid URL"),
+  recipientEmail: z.string().email("Invalid email address"),
+  currency: z.string().default("USD"),
+  mainImageUrl: z.string().url("Invalid image URL").optional(),
+});
+
 export async function POST(request: Request) {
   try {
-    const {
-      productName,
-      oldPrice,
-      newPrice,
-      url,
-      recipientEmail,
-      currency = "INR",
-      mainImageUrl,
-    } = await request.json();
+    const body = await request.json();
+    const data = PriceAlertSchema.parse(body);
 
-    const { data, error } = await resend.emails.send({
+    // Calculate price drop percentage
+    const dropPercentage =
+      ((data.oldPrice - data.newPrice) / data.oldPrice) * 100;
+
+    const { data: emailData, error } = await resend.emails.send({
       from: `FireCrawl <${FROM_EMAIL}>`,
-      to: [recipientEmail],
-      subject: `Price Drop Alert: ${productName}`,
-      react: PriceAlertEmail({
-        productName,
-        oldPrice,
-        newPrice,
-        url,
-        currency,
-        mainImageUrl,
+      to: [data.recipientEmail],
+      subject: `Price Drop Alert: ${data.productName} (-${dropPercentage.toFixed(1)}%)`,
+      react: PriceAlert({
+        ...data,
+        dropPercentage,
       }),
     });
 
     if (error) {
-      return NextResponse.json({ error }, { status: 400 });
+      console.error("Error sending email:", error);
+      return Response.json(
+        { message: "Failed to send email", error: error.message },
+        { status: StatusCodes.SERVICE_UNAVAILABLE },
+      );
     }
 
-    return NextResponse.json({ data });
+    return Response.json(
+      {
+        message: "Price alert sent successfully",
+        data: emailData,
+        details: {
+          recipientEmail: data.recipientEmail,
+          productName: data.productName,
+          priceDropPercentage: dropPercentage,
+        },
+      },
+      { status: StatusCodes.OK },
+    );
   } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
+    console.error("Error processing price alert:", error);
+
+    if (error instanceof z.ZodError) {
+      return Response.json(
+        {
+          message: "Validation error",
+          details: error.errors,
+        },
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
+      );
+    }
+
+    return Response.json(
+      { message: "Internal Server Error" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR },
     );
   }
 }
