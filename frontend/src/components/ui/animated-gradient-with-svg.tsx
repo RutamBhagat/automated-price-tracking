@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useMemo, useRef } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
-import { useDimensions } from "@/hooks/use-debounced-dimensions";
 
 interface AnimatedGradientProps {
   colors: string[];
@@ -10,22 +9,16 @@ interface AnimatedGradientProps {
   blur?: "light" | "medium" | "heavy";
 }
 
-const randomInt = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
+export const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
   colors,
-  speed = 5,
+  speed = 0,
   blur = "light",
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dimensions = useDimensions(containerRef);
-
-  const circleSize = useMemo(
-    () => Math.max(dimensions.width, dimensions.height),
-    [dimensions.width, dimensions.height],
-  );
+  const positions = [
+    { top: "10%", left: "10%" },
+    { top: "60%", left: "40%" },
+    { top: "30%", left: "70%" },
+  ];
 
   const blurClass =
     blur === "light"
@@ -35,43 +28,22 @@ const AnimatedGradient: React.FC<AnimatedGradientProps> = ({
         : "blur-[100px]";
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden">
       <div className={cn(`absolute inset-0`, blurClass)}>
-        {colors.map((color, index) => (
-          <svg
+        {positions.map((position, index) => (
+          <div
             key={index}
-            className="absolute animate-background-gradient"
-            style={
-              {
-                top: `${Math.random() * 50}%`,
-                left: `${Math.random() * 50}%`,
-                "--background-gradient-speed": `${1 / speed}s`,
-                "--tx-1": Math.random() - 0.5,
-                "--ty-1": Math.random() - 0.5,
-                "--tx-2": Math.random() - 0.5,
-                "--ty-2": Math.random() - 0.5,
-                "--tx-3": Math.random() - 0.5,
-                "--ty-3": Math.random() - 0.5,
-                "--tx-4": Math.random() - 0.5,
-                "--ty-4": Math.random() - 0.5,
-              } as React.CSSProperties
-            }
-            width={circleSize * randomInt(0.5, 1.5)}
-            height={circleSize * randomInt(0.5, 1.5)}
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              r="50"
-              fill={color}
-              className="opacity-30 dark:opacity-[0.15]"
-            />
-          </svg>
+            className="absolute h-[50vh] w-[50vh] rounded-full opacity-30 dark:opacity-[0.15]"
+            style={{
+              backgroundColor: colors[index % colors.length],
+              top: position.top,
+              left: position.left,
+              transition:
+                speed > 0 ? `transform ${1 / speed}s ease-in-out` : "none",
+            }}
+          />
         ))}
       </div>
     </div>
   );
 };
-
-export { AnimatedGradient };
