@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,17 @@ import {
   Tag,
   Truck,
 } from "lucide-react";
+import { formatCurrency } from "@/lib/utils";
+
+interface Product {
+  url: string;
+  latest_price: number | null;
+  latest_name: string | null;
+  currency: string | null;
+  is_available: boolean;
+  main_image_url: string | null;
+  tracked_since: string;
+}
 
 const container = {
   hidden: { opacity: 0 },
@@ -38,6 +49,43 @@ interface DashboardContentProps {
 }
 
 export function DashboardContent({ userName }: DashboardContentProps) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch("/api/v1/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to load products",
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
+  // Calculate stats
+  const totalProducts = products.length;
+  const availableProducts = products.filter((p) => p.is_available).length;
+  const priceDrops = products.filter((p) => p.latest_price !== null).length;
+
+  // Calculate total savings (example calculation)
+  const totalSavings = products.reduce((acc, product) => {
+    if (!product.latest_price) return acc;
+    // This is a simplified calculation. You might want to compare with initial price
+    return acc + product.latest_price;
+  }, 0);
+
   return (
     <div className="relative min-h-screen bg-slate-950">
       {/* Vibrant Gradient Background */}
@@ -108,10 +156,10 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                   variants={item}
                   className="mb-2 text-2xl font-medium text-zinc-100"
                 >
-                  24
+                  {totalProducts}
                 </motion.p>
                 <motion.p variants={item} className="text-sm text-zinc-300">
-                  +2 from last week
+                  {availableProducts} currently available
                 </motion.p>
               </motion.div>
             </motion.div>
@@ -183,7 +231,7 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                 variants={item}
                 className="mb-2 text-2xl font-medium text-zinc-100"
               >
-                $432.89
+                {formatCurrency(totalSavings, "USD")}
               </motion.p>
               <motion.p variants={item} className="text-sm text-zinc-300">
                 +$89 this month
@@ -221,7 +269,7 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                   variants={item}
                   className="mb-2 text-2xl font-medium text-zinc-100"
                 >
-                  7
+                  {priceDrops}
                 </motion.p>
                 <motion.p variants={item} className="text-sm text-zinc-300">
                   In the last 24h
@@ -232,36 +280,57 @@ export function DashboardContent({ userName }: DashboardContentProps) {
         </div>
 
         {/* Recent Products & Activity */}
-        <div className="grid md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <motion.div variants={item}>
             <Card className="h-full rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
               <CardHeader>
                 <CardTitle>Recent Products</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-0">
-                  {/* Product Items */}
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="flex cursor-pointer items-center justify-between border border-white/10 bg-white/5 p-4"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="h-10 w-10 bg-blue-500/20" />
-                        <div>
-                          <p className="font-medium">Product {i}</p>
-                          <p className="text-sm text-blue-200">$199.99</p>
-                        </div>
-                      </div>
-                      <Badge
-                        variant="outline"
-                        className="rounded-none border-blue-200 text-blue-200"
+                {loading ? (
+                  <div className="text-center text-white/60">Loading...</div>
+                ) : error ? (
+                  <div className="text-center text-red-400">{error}</div>
+                ) : (
+                  <div className="space-y-0">
+                    {products.slice(0, 5).map((product) => (
+                      <div
+                        key={product.url}
+                        className="flex cursor-pointer items-center justify-between border border-white/10 bg-white/5 p-4"
                       >
-                        -5%
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
+                        <div className="flex items-center space-x-4">
+                          {product.main_image_url && (
+                            <img
+                              src={product.main_image_url}
+                              alt={product.latest_name || "Product"}
+                              className="h-10 w-10 object-cover"
+                            />
+                          )}
+                          <div>
+                            <p className="font-medium">
+                              {product.latest_name || "Unnamed Product"}
+                            </p>
+                            <p className="text-sm text-white/60">
+                              {product.latest_price && product.currency
+                                ? formatCurrency(
+                                    product.latest_price,
+                                    product.currency,
+                                  )
+                                : "Price unavailable"}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge
+                          variant={
+                            product.is_available ? "default" : "secondary"
+                          }
+                        >
+                          {product.is_available ? "Available" : "Unavailable"}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </motion.div>
