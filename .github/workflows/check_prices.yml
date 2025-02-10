@@ -10,38 +10,8 @@ jobs:
   check-prices:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./backend
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-          cache: "pip"
-
-      - name: Install dependencies
+      - name: Check prices via API
         run: |
-          python -m pip install --upgrade pip
-          pip install uv
-          uv venv
-          source .venv/bin/activate
-          uv sync
-        # run: |
-        #   python -m pip install --upgrade pip
-        #   pip install -r requirements.txt
-
-      - name: Run price checker
-        env:
-          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
-          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-        run: |
-          source .venv/bin/activate
-          python src/check_prices.py
-        # run: python src/check_prices.py
+          curl -X POST ${{ secrets.APP_URL }}/api/v1/products/check-prices \
+          -H "Content-Type: application/json"

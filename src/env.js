@@ -15,9 +15,9 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: z.string(),
     DATABASE_URL: z.string().url(),
     FIRECRAWL_API_KEY: z.string(),
-    EMAIL_ADDRESS: z.string().email(),
-    EMAIL_APP_PASSWORD: z.string(),
     RESEND_API_KEY: z.string(),
+    EMAIL_FROM: z.string().email(),
+    APP_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -42,9 +42,9 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     FIRECRAWL_API_KEY: process.env.FIRECRAWL_API_KEY,
-    EMAIL_ADDRESS: process.env.EMAIL_ADDRESS,
-    EMAIL_APP_PASSWORD: process.env.EMAIL_APP_PASSWORD,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    EMAIL_FROM: process.env.EMAIL_FROM,
+    APP_URL: process.env.APP_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
