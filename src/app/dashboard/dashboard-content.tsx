@@ -353,27 +353,8 @@ export function DashboardContent({ userName }: DashboardContentProps) {
             </div>
           </div>
 
-          {/* Single column card */}
-          <div className="relative h-full overflow-hidden bg-slate-950">
-            <AnimatedGradient
-              colors={["#F59E0B", "#A78BFA", "#FCD34D"]}
-              speed={0}
-              blur="medium"
-            />
-            <div className="relative z-10 p-8 text-zinc-100 backdrop-blur-sm">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm text-zinc-200">Total Savings</h3>
-                <DollarSign className="h-4 w-4 text-zinc-200" />
-              </div>
-              <p className="mb-2 text-2xl font-medium text-zinc-100">
-                {formatCurrency(totalSavings, "USD")}
-              </p>
-              <p className="text-sm text-zinc-300">+$89 this month</p>
-            </div>
-          </div>
-
           {/* Last row - spans 2 columns */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-3">
             <div className="relative h-full overflow-hidden bg-slate-950">
               <AnimatedGradient
                 colors={["#3B82F6", "#A78BFA", "#FBCFE8"]}
