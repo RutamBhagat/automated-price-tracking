@@ -185,7 +185,10 @@ export function DashboardContent({ userName }: DashboardContentProps) {
 
       const data = await response.json();
       const formattedData = data.items.map((item: any) => ({
-        date: new Date(item.timestamp).toLocaleDateString(),
+        date: new Date(item.timestamp).toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+        }),
         price: item.price,
       }));
       setPriceHistory(formattedData);
@@ -379,61 +382,6 @@ export function DashboardContent({ userName }: DashboardContentProps) {
             </div>
           </div>
         </div>
-
-        {/* Recent Products */}
-        <div>
-          <Card className="h-full rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
-            <CardHeader>
-              <CardTitle>Recent Products</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {loading ? (
-                <div className="text-center text-white/60">Loading...</div>
-              ) : error ? (
-                <div className="text-center text-red-400">{error}</div>
-              ) : (
-                <div className="space-y-0">
-                  {products.slice(0, 5).map((product) => (
-                    <div
-                      key={product.url}
-                      className="flex cursor-pointer items-center justify-between border border-white/10 bg-white/5 p-4 hover:bg-white/10"
-                      onClick={() => fetchPriceHistory(product.url)}
-                    >
-                      <div className="flex items-center space-x-4">
-                        {product.main_image_url && (
-                          <img
-                            src={product.main_image_url}
-                            alt={product.latest_name || "Product"}
-                            className="h-10 w-10 object-cover"
-                          />
-                        )}
-                        <div>
-                          <p className="font-medium">
-                            {product.latest_name || "Unnamed Product"}
-                          </p>
-                          <p className="text-sm text-white/60">
-                            {product.latest_price && product.currency
-                              ? formatCurrency(
-                                  product.latest_price,
-                                  product.currency,
-                                )
-                              : "Price unavailable"}
-                          </p>
-                        </div>
-                      </div>
-                      <Badge
-                        variant={product.is_available ? "default" : "secondary"}
-                      >
-                        {product.is_available ? "Available" : "Unavailable"}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Price History Chart */}
         <div>
           <Card className="rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
@@ -535,6 +483,59 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                       />
                     </AreaChart>
                   </ResponsiveContainer>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        {/* Recent Products */}
+        <div>
+          <Card className="h-full rounded-none border border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur-2xl [&>*]:rounded-none">
+            <CardHeader>
+              <CardTitle>Recent Products</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="text-center text-white/60">Loading...</div>
+              ) : error ? (
+                <div className="text-center text-red-400">{error}</div>
+              ) : (
+                <div className="space-y-0">
+                  {products.slice(0, 5).map((product) => (
+                    <div
+                      key={product.url}
+                      className="flex cursor-pointer items-center justify-between border border-white/10 bg-white/5 p-4 hover:bg-white/10"
+                      onClick={() => fetchPriceHistory(product.url)}
+                    >
+                      <div className="flex items-center space-x-4">
+                        {product.main_image_url && (
+                          <img
+                            src={product.main_image_url}
+                            alt={product.latest_name || "Product"}
+                            className="h-10 w-10 object-cover"
+                          />
+                        )}
+                        <div>
+                          <p className="font-medium">
+                            {product.latest_name || "Unnamed Product"}
+                          </p>
+                          <p className="text-sm text-white/60">
+                            {product.latest_price && product.currency
+                              ? formatCurrency(
+                                  product.latest_price,
+                                  product.currency,
+                                )
+                              : "Price unavailable"}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge
+                        variant={product.is_available ? "default" : "secondary"}
+                      >
+                        {product.is_available ? "Available" : "Unavailable"}
+                      </Badge>
+                    </div>
+                  ))}
                 </div>
               )}
             </CardContent>
