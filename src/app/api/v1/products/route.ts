@@ -17,11 +17,18 @@ export async function GET() {
     }
 
     const userProducts = await ProductService.getAllProducts(session.user.id);
-    // Transform the response to match the expected format
-    const products = userProducts.map((up) => ({
-      ...up.product,
-      latestPrice: up.product.prices[0] ?? null,
-    }));
+    const products = userProducts.map((up) => {
+      const latestPrice = up.product.prices[0];
+      return {
+        url: up.product.url,
+        latest_price: latestPrice?.price ?? null,
+        latest_name: latestPrice?.name ?? null,
+        currency: latestPrice?.currency ?? null,
+        is_available: latestPrice?.is_available ?? true,
+        main_image_url: latestPrice?.main_image_url ?? null,
+        tracked_since: up.createdAt ?? null,
+      };
+    });
 
     return Response.json(products, { status: StatusCodes.OK });
   } catch (error) {
@@ -46,19 +53,15 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { url } = AddProductSchema.parse(body);
 
-    // First scrape the product
     const productData = await ProductScraper.scrapeProduct(url);
 
-    // Then create/update the product and user association
     const userProduct = await ProductService.addProduct(
       productData.url,
       session.user.id,
     );
 
-    // Finally add the price history
     const priceHistory = await ProductService.addPrice(productData);
 
-    // Return the combined data
     return Response.json(
       {
         url: userProduct.productUrl,

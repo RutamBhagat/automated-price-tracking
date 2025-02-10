@@ -22,11 +22,8 @@ import {
 
 export default function Navbar() {
   const { status } = useSession();
-  // Remove isMobileMenuOpen state as Sheet handles this internally
-
   const navItems = [
     { href: "/#Hero", label: "Home" },
-    { href: "/#Stats", label: "Stats" },
     { href: "/dashboard", label: "Dashboard" },
   ];
 
@@ -46,7 +43,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   data-id={item.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+                  className="rounded-none px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
                 >
                   {item.label}
                 </Link>
@@ -56,7 +53,7 @@ export default function Navbar() {
                   <Button
                     onClick={() => signOut()}
                     variant="outline"
-                    className="flex items-center gap-2 bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
+                    className="flex items-center gap-2 rounded-none bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
                   >
                     <LogOut className="h-4 w-4" />
                     Sign out
@@ -65,7 +62,7 @@ export default function Navbar() {
                   <Link href="/auth/signin">
                     <Button
                       variant="outline"
-                      className="flex items-center gap-2 bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
+                      className="flex items-center gap-2 rounded-none bg-white text-slate-950 hover:bg-slate-200 hover:text-slate-950"
                     >
                       <LogIn className="h-4 w-4" />
                       Sign in
@@ -81,14 +78,14 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-400 hover:text-white"
+                  className="rounded-none text-gray-400 hover:text-white"
                 >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="max-h-[100dvh] min-h-[100dvh] w-72 border-slate-800 bg-slate-900 p-0"
+                className="max-h-[100dvh] min-h-[100dvh] w-72 rounded-none border-slate-800 bg-slate-900 p-0"
               >
                 <div className="flex h-full flex-col">
                   <SheetHeader className="border-b border-slate-800 p-6">
@@ -102,7 +99,7 @@ export default function Navbar() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-300 transition-colors hover:bg-slate-800 hover:text-white"
+                        className="flex items-center gap-3 rounded-none px-4 py-3 text-gray-300 transition-colors hover:bg-slate-800 hover:text-white"
                       >
                         {item.href.includes("Hero") && (
                           <Home className="h-5 w-5" />
@@ -122,14 +119,14 @@ export default function Navbar() {
                     {status === "authenticated" ? (
                       <Button
                         onClick={() => signOut()}
-                        className="w-full bg-white text-slate-900 transition-colors hover:bg-slate-200"
+                        className="w-full rounded-none bg-white text-slate-900 transition-colors hover:bg-slate-200"
                       >
                         <LogOut className="mr-2 h-5 w-5" />
                         Sign out
                       </Button>
                     ) : (
                       <Link href="/auth/signin" className="block w-full">
-                        <Button className="w-full bg-white text-slate-900 transition-colors hover:bg-slate-200">
+                        <Button className="w-full rounded-none bg-white text-slate-900 transition-colors hover:bg-slate-200">
                           <LogIn className="mr-2 h-5 w-5" />
                           Sign in
                         </Button>

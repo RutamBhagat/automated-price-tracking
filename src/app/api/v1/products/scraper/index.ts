@@ -25,7 +25,6 @@ export class ProductScraper {
         throw new Error("No product data found in response");
       }
 
-      // Transform the scraped data into ProductData format
       const productData = {
         url: result.metadata.sourceURL,
         timestamp: new Date(),

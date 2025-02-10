@@ -9,7 +9,7 @@ import Image from "next/image";
 function HeroWithImages() {
   return (
     <>
-      <LampContainer className="min-h-[41dvh]">
+      <LampContainer className="min-h-[37dvh]">
         <></>
       </LampContainer>
       <div id="Home" className="w-full bg-slate-950">
@@ -73,14 +73,14 @@ function HeroWithImages() {
               >
                 <Button
                   size="lg"
-                  className="gap-4 border-[#0e8ba0] text-[#0e8ba0] hover:bg-[#0e8ba0] hover:text-white"
+                  className="gap-4 rounded-none border-[#0e8ba0] text-[#0e8ba0] hover:bg-[#0e8ba0] hover:text-white"
                   variant="outline"
                 >
                   Learn More <Info className="h-4 w-4" />
                 </Button>
                 <Button
                   size="lg"
-                  className="gap-4 bg-[#16c5e2] text-[#020617] hover:bg-[#0e8ba0] hover:text-white"
+                  className="gap-4 rounded-none bg-[#16c5e2] text-[#020617] hover:bg-[#0e8ba0] hover:text-white"
                 >
                   Get Started Now <MoveRight className="h-4 w-4" />
                 </Button>
@@ -94,7 +94,7 @@ function HeroWithImages() {
                 duration: 0.8,
                 ease: "easeInOut",
               }}
-              className="flex justify-center items-center gap-12"
+              className="flex items-center justify-center gap-12"
             >
               <div className="flex flex-col gap-12">
                 <Image
@@ -102,14 +102,14 @@ function HeroWithImages() {
                   alt="Feature image 1"
                   width={300}
                   height={800}
-                  className="rounded-md object-cover h-[300px]"
+                  className="h-[300px] rounded-none object-cover"
                 />
                 <Image
                   src="/3.jpg"
                   alt="Feature image 3"
                   width={300}
                   height={800}
-                  className="rounded-md object-cover h-[300px]"
+                  className="h-[300px] rounded-none object-cover"
                 />
               </div>
               <Image
@@ -117,7 +117,7 @@ function HeroWithImages() {
                 alt="Feature image 2"
                 width={300}
                 height={800}
-                className="rounded-md object-cover h-[640px]"
+                className="h-[640px] rounded-none object-cover"
               />
             </motion.div>
           </div>

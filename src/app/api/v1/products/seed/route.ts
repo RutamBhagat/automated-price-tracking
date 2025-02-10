@@ -5,7 +5,6 @@ import { db } from "@/server/db";
 
 export async function POST(request: NextRequest) {
   try {
-    // Get all products
     const userProducts = await db.userProduct.findMany({
       include: {
         product: {
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
       if (!latestPrice?.price || !latestPrice.name || !latestPrice.currency)
         continue;
 
-      // Generate 24 historical dates (1st and 15th of each month)
       const dates = [];
       const now = new Date();
       for (let i = 0; i < 12; i++) {
@@ -38,16 +36,12 @@ export async function POST(request: NextRequest) {
         dates.push(new Date(month.setDate(15)));
       }
 
-      // Sort dates from oldest to newest
       dates.sort((a, b) => a.getTime() - b.getTime());
 
-      // Generate prices with random variations
       for (const date of dates) {
-        // Random variation between -15% and +10% of current price
         const variation = (Math.random() * 25 - 15) / 100;
         const historicalPrice = Math.round(latestPrice.price * (1 + variation));
 
-        // Add historical price
         const priceHistory = await db.priceHistory.create({
           data: {
             product_url: product.url,

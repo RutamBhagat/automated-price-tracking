@@ -46,6 +46,7 @@ import {
   YAxis,
 } from "recharts";
 import { z } from "zod";
+import getSymbolFromCurrency from "currency-symbol-map";
 
 interface Product {
   url: string;
@@ -159,7 +160,6 @@ export function DashboardContent({ userName }: DashboardContentProps) {
     }
   };
 
-  // Calculate stats
   const totalProducts = products.length;
   const availableProducts = products.filter((p) => p.is_available).length;
   const priceDrops = products.filter((p) => p.latest_price !== null).length;
@@ -184,13 +184,24 @@ export function DashboardContent({ userName }: DashboardContentProps) {
       }
 
       const data = await response.json();
-      const formattedData = data.items.map((item: any) => ({
-        date: new Date(item.timestamp).toLocaleDateString(undefined, {
-          month: "short",
-          day: "numeric",
-        }),
-        price: item.price,
-      }));
+      const formattedData = data.items
+        .map((item: any) => ({
+          date: new Date(item.timestamp).toLocaleDateString(undefined, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+          }),
+          price: item.price,
+          timestamp: new Date(item.timestamp).getTime(),
+        }))
+        .sort(
+          (a: { timestamp: number }, b: { timestamp: number }) =>
+            a.timestamp - b.timestamp,
+        )
+        .map(({ date, price }: { date: string; price: number }) => ({
+          date,
+          price,
+        }));
       setPriceHistory(formattedData);
       setSelectedProduct(products.find((p) => p.url === url) || null);
     } catch (err) {
@@ -453,8 +464,8 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                         tickLine={{ stroke: "rgba(255,255,255,0.1)" }}
                         tickFormatter={(value) =>
                           selectedProduct?.currency
-                            ? formatCurrency(value, selectedProduct.currency)
-                            : value.toString()
+                            ? `${(value / 1000).toFixed(1)}k ${getSymbolFromCurrency(selectedProduct.currency)}`
+                            : `${(value / 1000).toFixed(1)}k`
                         }
                       />
                       <Tooltip
@@ -468,10 +479,10 @@ export function DashboardContent({ userName }: DashboardContentProps) {
                         formatter={(value: number) =>
                           selectedProduct?.currency
                             ? [
-                                formatCurrency(value, selectedProduct.currency),
+                                `${(value / 1000).toFixed(1)}k ${getSymbolFromCurrency(selectedProduct.currency)}`,
                                 "Price",
                               ]
-                            : [value, "Price"]
+                            : [`${(value / 1000).toFixed(1)}k`, "Price"]
                         }
                       />
                       <Area

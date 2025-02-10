@@ -3,12 +3,10 @@ import { db } from "@/server/db";
 import { ProductScraper } from "../scraper";
 import { sendPriceAlert } from "@/lib/notifications";
 
-// Threshold percentage for price drop alerts (e.g., 5% = 0.05)
 const PRICE_DROP_THRESHOLD = 0.05;
 
 export async function POST(req: Request) {
   try {
-    // Get all products with their users
     const products = await db.product.findMany({
       include: {
         prices: {
@@ -32,17 +30,14 @@ export async function POST(req: Request) {
 
     for (const product of products) {
       try {
-        // Get the most recent recorded price and currency
         const lastRecord = product.prices[0];
         if (!lastRecord) continue;
 
         const lastPrice = lastRecord.price;
         const currency = lastRecord.currency;
 
-        // Retrieve updated product data
         const updatedProduct = await ProductScraper.scrapeProduct(product.url);
 
-        // If product is unavailable, keep the last known price
         if (!updatedProduct.is_available) {
           updatedProduct.price = lastPrice;
           console.log(
@@ -50,7 +45,6 @@ export async function POST(req: Request) {
           );
         }
 
-        // Add the price to the database
         await db.priceHistory.create({
           data: {
             id: `${updatedProduct.url}_${new Date().toISOString()}`,
@@ -70,13 +64,11 @@ export async function POST(req: Request) {
           message: `Added new price entry for ${updatedProduct.name}`,
         });
 
-        // Only check for price drops if the product is available
         if (updatedProduct.is_available && lastPrice > 0) {
           const currentPrice = updatedProduct.price;
           const priceDrop = (lastPrice - currentPrice) / lastPrice;
 
           if (priceDrop >= PRICE_DROP_THRESHOLD) {
-            // Send alert to each user tracking this product
             for (const userProduct of product.userProducts) {
               if (userProduct.user.email) {
                 await sendPriceAlert({

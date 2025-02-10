@@ -5,7 +5,6 @@ import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Use test email only if EMAIL_FROM is not set
 const FROM_EMAIL = process.env.EMAIL_FROM || "onboarding@resend.dev";
 
 const PriceAlertSchema = z.object({
@@ -23,7 +22,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = PriceAlertSchema.parse(body);
 
-    // Calculate price drop percentage
     const dropPercentage =
       ((data.oldPrice - data.newPrice) / data.oldPrice) * 100;
 

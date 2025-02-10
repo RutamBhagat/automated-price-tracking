@@ -28,7 +28,6 @@ export async function POST(request: NextRequest) {
     try {
       const priceHistory = await ProductService.getPriceHistory(url);
 
-      // Apply pagination if limit is specified
       const paginatedHistory = limit
         ? priceHistory.slice(offset, offset + limit)
         : priceHistory;
