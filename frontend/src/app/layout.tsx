@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import Providers from "@/components/providers";
 import "@/styles/globals.css";
+import { Toaster } from "sonner";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
@@ -21,6 +22,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

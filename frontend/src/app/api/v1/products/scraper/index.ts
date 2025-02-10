@@ -2,6 +2,7 @@ import FirecrawlApp from "@mendable/firecrawl-js";
 import { env } from "@/env";
 import { ExtractSchemaType, type ScraperResponse } from "./types";
 import { type ProductData } from "../services/types";
+import consola from "consola";
 
 export class ProductScraper {
   private static app = new FirecrawlApp({ apiKey: env.FIRECRAWL_API_KEY });
@@ -11,25 +12,31 @@ export class ProductScraper {
    */
   static async scrapeProduct(url: string): Promise<ProductData> {
     try {
-      const result = await this.app.scrapeUrl(url, {
+      const result = (await this.app.scrapeUrl(url, {
         formats: ["extract"],
         extract: { schema: ExtractSchemaType },
-      }) as ScraperResponse;
+      })) as ScraperResponse;
 
-      if (!result.success || !result.data) {
+      if (!result.success) {
         throw new Error(result.error ?? "Failed to scrape product data");
       }
 
+      if (!result.extract) {
+        throw new Error("No product data found in response");
+      }
+
       // Transform the scraped data into ProductData format
-      return {
-        url: result.data.metadata.sourceURL,
+      const productData = {
+        url: result.metadata.sourceURL,
         timestamp: new Date(),
-        name: result.data.extract.name,
-        price: result.data.extract.price,
-        currency: result.data.extract.currency,
-        main_image_url: result.data.extract.main_image_url,
-        is_available: result.data.extract.is_available,
+        name: result.extract.name,
+        price: result.extract.price,
+        currency: result.extract.currency,
+        main_image_url: result.extract.main_image_url,
+        is_available: result.extract.is_available,
       };
+
+      return productData;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Scraping failed: ${error.message}`);
