@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { LampContainer } from "../ui/lamp";
 import Image from "next/image";
+import Link from "next/link";
 
 function HeroWithImages() {
   return (
@@ -71,19 +72,14 @@ function HeroWithImages() {
                 }}
                 className="flex flex-row gap-4"
               >
-                <Button
-                  size="lg"
-                  className="gap-4 rounded-none border-[#0e8ba0] text-[#0e8ba0] hover:bg-[#0e8ba0] hover:text-white"
-                  variant="outline"
-                >
-                  Learn More <Info className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="lg"
-                  className="gap-4 rounded-none bg-[#16c5e2] text-[#020617] hover:bg-[#0e8ba0] hover:text-white"
-                >
-                  Get Started Now <MoveRight className="h-4 w-4" />
-                </Button>
+                <Link href="/dashboard">
+                  <Button
+                    size="lg"
+                    className="gap-4 rounded-none bg-[#16c5e2] text-[#020617] hover:bg-[#0e8ba0] hover:text-white"
+                  >
+                    Get Started Now <MoveRight className="h-4 w-4" />
+                  </Button>
+                </Link>
               </motion.div>
             </div>
             <motion.div
